@@ -13,7 +13,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'BenchNine', sans-serif;
+    /*font-family: 'BenchNine', sans-serif;*/
 }
 li {
     list-style: none;
@@ -185,6 +185,121 @@ li a.active {
     margin-top: 50px;
 }
 
+/*Buscar area*/
+
+.buscar h2 {
+    font-size: 90px;
+    color: #42b3e5;
+    margin-top: 50px;
+     padding:40px;
+}
+.buscar h4 {
+    font-size: 24px;
+    color: #737373;
+    margin-bottom: 45px;
+}
+.buscar .pure-form{
+	padding: 20px 10px;
+	text-align: center;
+	font-size: 16px;
+}
+.buscar .recursos{
+	width: 100%;
+	max-width: 600px
+	
+}
+/*Barra resultados area*/
+.barraResultado hr {
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #999;
+}
+.barraResultado p {
+	margin: 0;
+	font-size: 18px;
+}
+/* Resultados area */
+#resultados{
+	padding-top: 8px;
+}
+#resultados :hover{
+	background-color: yellow;
+	cursor: pointer;
+	}
+#resultados a:hover{
+	text-decoration: underline;
+}
+#resultados .panel-body{
+	padding: 0;
+}
+
+#descripcion {
+	font-size: 17px;
+	text-align: justify;
+}
+#filtros {
+	font-size: 17px;
+}
+
+#genero li{ 
+	display:none;
+}
+#loadMore {
+    color:#42b3e5 !important;
+    cursor:pointer;
+    text-align: center;
+}
+#loadMore:hover {
+    color:black;
+}
+#showLess {
+    color:#42b3e5 !important;
+    cursor:pointer;
+    display:none;
+    text-align: center;
+}
+#showLess:hover {
+    color:black;
+}
+#calificacion {
+	
+	font-size: 20px;
+}
+/*Perfil area*/
+
+.perfil h2 {
+    font-size: 90px;
+    color: #42b3e5;
+    margin-top: 50px;
+     padding:40px;
+}
+.perfil h4 {
+    font-size: 24px;
+    color: #737373;
+    
+}
+.perfil .pure-form{
+	padding: 20px 10px;
+	text-align: center;
+	font-size: 16px;
+}
+.perfil .recursos{
+	width: 100%;
+	max-width: 600px
+	
+}
+.perfil .importante{
+	color: orange;
+	
+}
+.perfil .title {
+    font-size: 36px;
+    color: inherit;
+    margin-top: 0px;
+    padding:0px;
+   
+    
+}
 /*about area*/
 
 .about h2 {
@@ -903,11 +1018,7 @@ text-align: center;
 #images_hz img {
 display: inline;
 }
-.modal-body{
 
-
-    font-size: 20px;
-}
 .result-details {
     background: #CCCACA;
     border-top: 2px solid #fff;
@@ -940,4 +1051,7 @@ display: inline;
    pointer-events: none;
    cursor: default;
 }
-
+.descargas{
+	
+	font-size: 28px;
+}

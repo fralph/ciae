@@ -53,6 +53,10 @@ if (isloggedin ()) {
 <!-- Fin Script Javascript -->
 <!-- Scripts JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-1.8.0.min.js"></script> 
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<!-- Script para filtro de genero -->
 <script>
 $(document).ready(function () {
     size_li = $("#genero li").size();
@@ -71,6 +75,22 @@ $(document).ready(function () {
         $('#genero').show().siblings('#showLess').hide();
     });
 });
+</script>
+<!-- Script del slider para filtro de duración -->
+<script type="text/javascript">
+$(function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 0,
+      max: 180,
+      values: [1,90],
+      slide: function( event, ui ) {
+        $( "#amount" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val(  $( "#slider-range" ).slider( "values", 0 ) +
+      " - " + $( "#slider-range" ).slider( "values", 1 ) );
+  });
 </script>
 <!-- Fin scripts JQuery -->
 </head>
@@ -154,7 +174,7 @@ $(document).ready(function () {
 			<div class="col-md-1">
 			</div>
 			<div class="col-md-8">
-				<p>7 Resultado(s) </p>
+				<p>3 Resultado(s) </p>
 			</div>
 			<div class="col-md-2">
 				<select class="form-control">
@@ -204,6 +224,11 @@ $(document).ready(function () {
 					</ul>
 					<div id="loadMore">Ver más...</div>
 					<div id="showLess">Ver menos...</div>	
+					<h3 style="text-align: left">Duración</h3>
+					<label for="amount">Entre:</label>
+    <input type="text" id="amount" name="amount" style="border:0; color:#f6931f; font-weight:bold;" readonly> 
+    <br><br>
+    <div id="slider-range" style="width:80%;"></div>
 					<h3 style="text-align: left">Calificación</h3>
 					<ul id="calificacion">
 						<li>
@@ -261,11 +286,13 @@ $(document).ready(function () {
 			</div>
 		</div>
 		<div id="resultados" class="col-md-9" style="text-align: left">
+			
 			<div class="panel panel-default">
 			<div class="single-result-detail clearfix">
 			<div data-toggle="modal" data-target="#myModal">
+			
 				<div id="descripcion" class="panel-body">
-					<center><h3>Amigos por correspondencia</h3></center>
+			<center><h3>Amigos por correspondencia</h3></center>
 					<div  class="col-md-4" style="text-align: left">
 						<p>Propósito Comunicativo: Informar</p>
 						<p>Género: Carta de presentación personal</p>
@@ -288,6 +315,7 @@ $(document).ready(function () {
 							realidad del colegio</p>
 					</div>
 					<div  class="col-md-3" style="text-align: left">
+					<img src="img/premio.png" class="premio" height="40px" width="40px">
 					<p>55 Visitas</p>
 					<p>3 Comentarios</p>
 					<p>20 votos</p>
@@ -296,12 +324,107 @@ $(document).ready(function () {
 					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 					<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-					<p style="font-size: 14px;">Creado por:<a> Natalia Ávila</a></p>
+					<p></p><p></p>
+					<p style="font-size: 14px;">Creado por:<a href="perfil.html"> Natalia Ávila</a></p>
+					
 					</div>
 				</div>
+			</div>	
 			</div>
 			</div>
+			
+			<div class="panel panel-default">
+			<div class="single-result-detail clearfix">
+			<div data-toggle="modal" data-target="#myModal">
+			
+				<div id="descripcion" class="panel-body">
+			<center><h3>Amigos por correspondencia</h3></center>
+					<div  class="col-md-4" style="text-align: left">
+						<p>Propósito Comunicativo: Informar</p>
+						<p>Género: Carta de presentación personal</p>
+						<p>Audiencia: Amigo</p>
+						<p>Duración: 90 min.</p>
+						<p>Contiene: 
+							<span class="glyphicon glyphicon-film" aria-hidden="false"></span>
+							<span class="glyphicon glyphicon-book" aria-hidden="false"></span>
+							<span class="glyphicon glyphicon-print" aria-hidden="false"></span>
+						</p>
+					</div>
+					<div  class="col-md-5">
+						<p>El producto final es una carta
+							de dos párrafos de extensión destinada a un amigo de un
+							curso paralelo, de un colegio cercano o de séptimo año,
+							según resulte más adecuado a la realidad del colegio El
+							producto final es una carta de dos párrafos de extensión
+							destinada a un amigo de un curso paralelo, de un colegio
+							cercano o de séptimo año, según resulte más adecuado a la
+							realidad del colegio</p>
+					</div>
+					<div  class="col-md-3" style="text-align: left">
+					<img src="img/premio.png" class="premio" height="40px" width="40px">
+					<p>55 Visitas</p>
+					<p>3 Comentarios</p>
+					<p>20 votos</p>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+					<p></p><p></p>
+					<p style="font-size: 14px;">Creado por:<a href="http://www.gogle.cl"> Natalia Ávila</a></p>
+					
+					</div>
+				</div>
+			</div>	
 			</div>
+			</div>
+			
+			<div class="panel panel-default">
+			<div class="single-result-detail clearfix">
+			<div data-toggle="modal" data-target="#myModal">
+			
+				<div id="descripcion" class="panel-body">
+			<center><h3>Amigos por correspondencia</h3></center>
+					<div  class="col-md-4" style="text-align: left">
+						<p>Propósito Comunicativo: Informar</p>
+						<p>Género: Carta de presentación personal</p>
+						<p>Audiencia: Amigo</p>
+						<p>Duración: 90 min.</p>
+						<p>Contiene: 
+							<span class="glyphicon glyphicon-film" aria-hidden="false"></span>
+							<span class="glyphicon glyphicon-book" aria-hidden="false"></span>
+							<span class="glyphicon glyphicon-print" aria-hidden="false"></span>
+						</p>
+					</div>
+					<div  class="col-md-5">
+						<p>El producto final es una carta
+							de dos párrafos de extensión destinada a un amigo de un
+							curso paralelo, de un colegio cercano o de séptimo año,
+							según resulte más adecuado a la realidad del colegio El
+							producto final es una carta de dos párrafos de extensión
+							destinada a un amigo de un curso paralelo, de un colegio
+							cercano o de séptimo año, según resulte más adecuado a la
+							realidad del colegio</p>
+					</div>
+					<div  class="col-md-3" style="text-align: left">
+					<img src="img/premio.png" class="premio" height="40px" width="40px">
+					<p>55 Visitas</p>
+					<p>3 Comentarios</p>
+					<p>20 votos</p>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+					<p></p><p></p>
+					<p style="font-size: 14px;">Creado por:<a href="http://www.gogle.cl"> Natalia Ávila</a></p>
+					
+					</div>
+				</div>
+			</div>	
+			</div>
+			</div>
+			
 		</div>
 	</div>
 </section>
@@ -347,7 +470,7 @@ $(document).ready(function () {
 				<a href="documentos/tarea.mayas.pdf" target="_blank">Descargar	Tarea</a></br>
 				<span class="glyphicon glyphicon-download-alt" aria-hidden="true" style="font-size: 20px;"></span>
 				<a href="documentos/pauta.pdf" target="_blank">Descargar Rúbrica Sugerida</a></br>
-				<span class="glyphicon glyphicon-download-alt" aria-hidden="true" style="font-size: 20px;"></span>
+				
 			</div>
 				<div class="col-md-5  col-md-offset-0 text-left">
 					<div class="panel panel-default">
@@ -388,9 +511,9 @@ $(document).ready(function () {
 		</div>
 		<?php }?>
 			<h3>Ejemplos</h3>
-			<p style="text-align: right">Quito, 3 de noviembre de 2016</p>
-			<p style="text-align: left">Estimada amiga:</p>
-			<p style="text-align: left">Hola, Nati. Espero que te encuentres
+			<p style="text-align: right;font-size: 18px;">Quito, 3 de noviembre de 2016</p>
+			<p style="text-align: left;font-size: 18px;">Estimada amiga:</p>
+			<p style="text-align: justify;font-size: 18px;">Hola, Nati. Espero que te encuentres
 			bien al recibir esta primera carta. Estoy muy contento de que
 			seamos amigos por correspondencia, es algo muy especial ya que las
 			cartas casi no se usan ahora. Te cuento que vivo en Ecuador y me
@@ -398,13 +521,13 @@ $(document).ready(function () {
 			sueño con tener mi propio “fan fiction” con una historia paralela
 			de Naruto. ¿Conoces la animación japonesa? ¿Has visto Naruto
 			alguna vez?</p>
-			<p style="text-align: left">Soy un niño normal, tengo pocos amigos
+			<p style="text-align: justify; font-size: 18px;">Soy un niño normal, tengo pocos amigos
 			pero muy cercanos. En el colegio me va más o menos, pero mis
 			clases favoritas son dibujo y lenguaje. Espero tu carta para saber
 			cómo eres tú. También te mando una foto de Quito, la ciudad en que
 			vivo.</p>
-			<p style="text-align: left">Muchos cariños y hasta pronto,</p>
-			<p style="text-align: left">Juan Anabalón</p>
+			<p style="text-align: left; font-size: 18px;">Muchos cariños y hasta pronto,</p>
+			<p style="text-align: left font-size: 18px;">Juan Anabalón</p>
 			<h3>Videos</h3>
 			<center>
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/_LfywvezuVQ" frameborder="0" allowfullscreen></iframe>
@@ -452,17 +575,12 @@ $(document).ready(function () {
 									<h4>Miembro nivel 2</h4>
 								</div>
 								<div class="col-md-6 text-left descargas">
-									<h3 style="margin-top: 0px; margin-bottom: 0px;">
-										Muy buena <span class="glyphicon glyphicon-star"
-											aria-hidden="true" style="font-size: 20px;"></span> <span
-											class="glyphicon glyphicon-star" aria-hidden="true"
-											style="font-size: 20px;"></span> <span
-											class="glyphicon glyphicon-star" aria-hidden="true"
-											style="font-size: 20px;"></span> <span
-											class="glyphicon glyphicon-star-empty" aria-hidden="true"
-											style="font-size: 20px;"></span> <span
-											class="glyphicon glyphicon-star-empty" aria-hidden="true"
-											style="font-size: 20px;"></span>
+									<h3 style="margin-top: 0px; margin-bottom: 0px;">Muy buena 
+										<span class="glyphicon glyphicon-star" aria-hidden="true" style="font-size: 20px;"></span>
+										<span class="glyphicon glyphicon-star" aria-hidden="true" style="font-size: 20px;"></span>
+										<span class="glyphicon glyphicon-star" aria-hidden="true" style="font-size: 20px;"></span>
+										<span class="glyphicon glyphicon-star-empty" aria-hidden="true" style="font-size: 20px;"></span>
+										<span class="glyphicon glyphicon-star-empty" aria-hidden="true" style="font-size: 20px;"></span>
 									</h3>
 									<p style="font-size: 18px;">Lorem ipsum dolor sit amet,
 										consectetur adipiscing elit. Etiam eget commodo eros.
