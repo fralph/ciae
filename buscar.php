@@ -76,7 +76,7 @@ $(document).ready(function () {
     });
 });
 </script>
-<!-- Script del slider para filtro de duración -->
+<!-- Script del slider para filtro de Tiempo estimadoión -->
 <script type="text/javascript">
 $(function() {
     $( "#slider-range" ).slider({
@@ -224,11 +224,8 @@ $(function() {
 					</ul>
 					<div id="loadMore">Ver más...</div>
 					<div id="showLess">Ver menos...</div>	
-					<h3 style="text-align: left">Duración</h3>
-					<label for="amount">Entre:</label>
-    <input type="text" id="amount" name="amount" style="border:0; color:#f6931f; font-weight:bold;" readonly> 
-    <br><br>
-    <div id="slider-range" style="width:80%;"></div>
+					<h3 style="text-align: left"></h3>
+					
 					<h3 style="text-align: left">Calificación</h3>
 					<ul id="calificacion">
 						<li>
@@ -297,7 +294,7 @@ $(function() {
 						<p>Propósito Comunicativo: Informar</p>
 						<p>Género: Carta de presentación personal</p>
 						<p>Audiencia: Amigo</p>
-						<p>Duración: 90 min.</p>
+						<p>Tiempo estimado: 90 min.</p>
 						<p>Contiene: 
 							<span class="glyphicon glyphicon-film" aria-hidden="false"></span>
 							<span class="glyphicon glyphicon-book" aria-hidden="false"></span>
@@ -343,7 +340,7 @@ $(function() {
 						<p>Propósito Comunicativo: Informar</p>
 						<p>Género: Carta de presentación personal</p>
 						<p>Audiencia: Amigo</p>
-						<p>Duración: 90 min.</p>
+						<p>Tiempo estimado: 90 min.</p>
 						<p>Contiene: 
 							<span class="glyphicon glyphicon-film" aria-hidden="false"></span>
 							<span class="glyphicon glyphicon-book" aria-hidden="false"></span>
@@ -389,7 +386,7 @@ $(function() {
 						<p>Propósito Comunicativo: Informar</p>
 						<p>Género: Carta de presentación personal</p>
 						<p>Audiencia: Amigo</p>
-						<p>Duración: 90 min.</p>
+						<p>Tiempo estimado: 90 min.</p>
 						<p>Contiene: 
 							<span class="glyphicon glyphicon-film" aria-hidden="false"></span>
 							<span class="glyphicon glyphicon-book" aria-hidden="false"></span>

@@ -33,7 +33,9 @@ var_dump($manage);
 //$sql=$DB->get_records_sql("SELECT COLUMN_JSON(data) as 'attribute' FROM mdl_emarking_resources WHERE COLUMN_GET(data, 'description' AS CHAR) like '%carta%' OR
 		//COLUMN_GET(data, 'comunicativePurpose' AS CHAR) like '%carta%'OR COLUMN_GET(data, 'type' AS CHAR) like '%carta%' OR COLUMN_GET(data, 'title' AS CHAR) like '%carta%'");
 
-$sql=$DB->get_records_sql("SELECT COLUMN_JSON(data) as 'attribute' FROM mdl_emarking_resources WHERE COLUMN_GET(data, 'views' AS CHAR) like '%pedro%'");
+//$sql=$DB->get_records_sql("SELECT COLUMN_JSON(data) as 'attribute' FROM mdl_emarking_resources WHERE COLUMN_GET(data, 'views' AS CHAR) like '%pedro%'");
+$sql=$DB->get_records_sql("SELECT COLUMN_JSON(data) as 'attribute' FROM mdl_emarking_resources");
+
 //var_dump($sql);
 $mal=Array('"[\\','\\"',']"','"[');
 $bien=Array("[",'"',']','[');
@@ -41,7 +43,11 @@ foreach($sql as $algo){
 		
 $replace=str_replace($mal, $bien, $algo->attribute);
 $jsonsql=json_decode($replace);
-var_dump($jsonsql->comments);
+if( isset($jsonsql->comments)){
+	
+	var_dump($jsonsql);
+}
+
 }
 ?>
 
