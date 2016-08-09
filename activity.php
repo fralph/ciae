@@ -183,7 +183,7 @@ $row=sizeof($table);
 					<p>Propósito comunicativo: <?php echo $activity->comunicative_pupose; ?></p>
 					<p>Género: <?php echo $activity->genre; ?></p>
 					<p>Audiencia: <?php echo $activity->audience; ?></p>
-					<p>Tiempo estimado: <?php echo $activity->estimated_time; ?></p>
+					<p>Tiempo estimado: <?php echo $activity->estimated_time; ?> minutos</p>
 					<p>Creado por: <?php echo $user_object->firstname.' '.$user_object->lastname ?> </p>
 
 
@@ -222,7 +222,7 @@ $row=sizeof($table);
 		<h3 style="text-align: left;">Didáctica</h3>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<h4 style="text-align: left;">Sugerencia</h4>	
+				<h4 style="text-align: left;">Didáctica</h4>	
 				<?php 
 				echo $activity->didactic_suggestions;
 				?>
@@ -230,7 +230,7 @@ $row=sizeof($table);
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<h4 style="text-align: left;">Indicaciones</h4>	
+				<h4 style="text-align: left;">Sugerencias</h4>	
 				<?php 
 				echo $activity->didactic_instructions;
 				?>

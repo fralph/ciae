@@ -33,16 +33,7 @@ class local_ciae_create_activity extends moodleform {
         
        require_once ('generos.php');
        array_unshift($generos, "Seleccione un género");
-       $result = $DB->get_records_sql('
-        SELECT gd.id,
-               gd.name,
-               gd.description 
-        FROM {grading_definitions} as gd, 
-             {grading_areas} as ga 
-        WHERE ga.id=gd.areaid AND
-              gd.method=? AND 
-              ga.contextid=? AND  
-              ga.component=?', array('rubric',1,'core_grading'));
+       $result = $DB->get_records('grading_definitions');
        $rubrics[0]= 'Seleccione una rúbrica';
         foreach ($result as $data) {
             $rubrics[$data->id]=$data->name;
@@ -58,80 +49,67 @@ class local_ciae_create_activity extends moodleform {
         $mform->setType('titulo', PARAM_TEXT);
         $mform->addRule('titulo', get_string('required'), 'required');
         //descripción
-        $mform->addElement('textarea', 'descripcion', "Descripción", 'wrap="virtual" rows="10" cols="50"'); 
+        $mform->addElement('static', '', '','Pequeña descrición sobre la actividad a realizar, max 500 caracteres.');
+        $mform->addElement('textarea', 'descripcion', "Descripción", 'wrap="virtual" rows="10" cols="50" maxlength="400"'); 
         $mform->setType('descripcion', PARAM_TEXT);
-        // OA
-        $mform->addElement('text', 'oa','Objetivo de aprendizaje'); 
-        $mform->addRule('oa', get_string('required'), 'required'); 
-        $mform->setType('oa', PARAM_TEXT);
-
-
-       
+ 
+        $mform->addElement('static', '', '','Los objetivos que entrega el ministerio de educación.');
         //Curso
-        $courseArray=array('Seleccione un curso','1° básico','2° básico','3° básico',
-            '4° básico','5° básico','6° básico',);
+        $courseArray=array('0'=>'Seleccione un curso','1'=>'1° básico','2'=>'2° básico','3'=>'3° básico',
+            '4'=>'4° básico','5'=>'5° básico','6'=>'6° básico',);
         $selectCourse =& $mform->createElement('select', 'course', 'curso',$courseArray);
        //OA
-        $oaArray=array('13','14','15','16','17','18','19','20','21',
-                        '22');
+        $oaArray=array('13'=>'13','14'=>'14','15'=>'15','16'=>'16','17'=>'17','18'=>'18','19'=>'19','20'=>'20','21'=>'21',
+                        '22'=>'22');
         $selectOA =& $mform->createElement('select', 'oa', 'Objetivo de Aprendizaje',$oaArray);
         $selectOA->setMultiple(true);
         //grupo de select Curso-OA
         $oaArray=array($selectCourse,$selectOA);
-        $mform->addGroup($oaArray,'algo','Objetivo de aprendizaje');
-        $mform->addRule('algo', get_string('required'), 'required'); 
-
-
+        $mform->addGroup($oaArray,'codigoOA','Objetivo de aprendizaje');
+        $mform->addRule('codigoOA', get_string('required'), 'required');
+        $mform->addHelpButton('codigoOA', 'codigoOA','ciae');
 
         // Propósito comunicativo
         $mform->addElement('select', 'pc', 'Propósito Comunicativo', $pc);
         $mform->addRule('pc', get_string('required'), 'required'); 
         $mform->setType('pc', PARAM_TEXT);
+        $mform->addHelpButton('pc', 'pc','ciae');
         // Género
         $mform->addElement('select', 'genero', 'Género', $generos);
         $mform->addRule('genero', get_string('required'), 'required'); 
         $mform->setType('genero', PARAM_TEXT);
+        $mform->addHelpButton('genero', 'genero','ciae');
         // Audiencia
         $mform->addElement('text', 'audiencia','Audiencia'); 
         $mform->setType('audiencia', PARAM_TEXT);
+        $mform->addHelpButton('audiencia', 'audiencia','ciae');
         // Tiempo estimado
-        $mform->addElement('text', 'tiempoEstimado','Tiempo Estimado'); 
-        $mform->setType('tiempoEstimado', PARAM_TEXT);        
+        $tiempoEstimado=array('45'=>'45 minutos','90'=>'90 minutos','135'=>'135 minutos','180'=>'180 minutos');
+        $mform->addElement('select', 'tiempoEstimado', 'Tiempo Estimado', $tiempoEstimado);
+        $mform->addRule('tiempoEstimado', get_string('required'), 'required');
+        $mform->setType('tiempoEstimado', PARAM_TEXT);      
 
         //Paso 2 Instrucciones
         $mform->addElement('header', 'IA', 'Instrucciones para el Alumno', null);
+        $mform->addElement('static', '', '','Cree las instrucciones que se entregarán a los alumnos.');
         $mform->addElement('editor', 'instructions', 'Instrucciones');
         $mform->setType('ejemplo', PARAM_RAW);
 
         //Paso 3 Didáctica
         $mform->addElement('header', 'DI', 'Didáctica', null);
-        $mform->addElement('editor', 'didacticSuggestions', 'Sugerencias Didacticas');
+        $mform->addElement('editor', 'didacticSuggestions', 'Didáctica');
         $mform->setType('ejemplo', PARAM_RAW);
-        $mform->addElement('editor', 'didacticInstructions', 'Instrucciones Didacticas');
-        $mform->setType('ejemplo', PARAM_RAW);
+        $mform->addElement('editor', 'didacticInstructions', 'Sugerencias');
+        $mform->setType('didacticInstructions', PARAM_RAW);
+        $mform->setAdvanced('didacticInstructions');
         $mform->addElement('editor', 'LanguageInstructions', 'Recursos del Lenguaje');
-        $mform->setType('ejemplo', PARAM_RAW);
+        $mform->setType('LanguageInstructions', PARAM_RAW);
+        $mform->setAdvanced('LanguageInstructions');
 
         //Paso 4 Rúbrica
         $mform->addElement('header', 'RUB', 'Rúbrica', null);
         $mform->addElement('select', 'rubric', 'Rúbrica', $rubrics);
         
-
-
-
-
-
-
-
-      
-        
-        
-        
-
-        
-      //  $mform->addElement('filepicker', 'actirivy', 'actividad', null,
-        //           array('maxbytes' => $maxbytes, 'accepted_types' => array('doc','docx','pdf')));
-
         $this->add_action_buttons(true,'enviar');
 
 
