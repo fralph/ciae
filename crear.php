@@ -30,28 +30,77 @@ $oaCode .=']';
 $instructions=$fromform->instructions['text'];
 $suggestion=$fromform->didacticSuggestions['text'];
 $genero=(int)$fromform->genero-1;
+switch ($fromform->pc){
+	case 1:
+		$comunicativepurpose="Informar";
+		break;
+	case 2:
+		$comunicativepurpose="Narrar";
+		break;
+	case 3:
+		$comunicativepurpose="Opinar";
+		break;
+}
+
+//echo $fromform->C1;
+$OAC1 ="";
+if(isset($fromform->C1)){
+	if(isset($fromform->CODC1)){
+		foreach($fromform->CODC1 as $key =>$value){
+			$porciones = explode("C1OA", $key);
+			$OAC1 .=$porciones[1].",";
+		}
+		$OAC1= substr($OAC1, 0, -1);
+		$OAC1 =$fromform->C1."[".$OAC1."]";
+	}
+	
+}
+$OAC2 ="";
+if(isset($fromform->C2)){
+	if(isset($fromform->CODC2)){
+		foreach($fromform->CODC2 as $key =>$value){
+			$porciones = explode("C2OA", $key);
+			$OAC2 .=$porciones[1].",";
+		}
+		$OAC2= substr($OAC2, 0, -1);
+		$OAC2 ="-".$fromform->C2."[".$OAC2."]";
+	}
+	
+}
+$OAC3 ="";
+if(isset($fromform->C3)){
+	if(isset($fromform->CODC3)){
+		foreach($fromform->CODC3 as $key =>$value){
+			$porciones = explode("C3OA", $key);
+			$OAC3 .=$porciones[1].",";
+		}
+		$OAC3= substr($OAC3, 0, -1);
+		$OAC3 ="-".$fromform->C3."[".$OAC3."]";
+	}
+}
+$oaCode=$OAC1.$OAC2.$OAC3;
 
 $record = new stdClass();
-$record->type         			= 1;
-$record->rubric_id 				= $fromform->rubric;
-$record->oa         			= $oaCode;
 $record->title 					= $fromform->titulo;
-$record->comunicative_purpose   = $fromform->pc;
+$record->description         	= $fromform->descripcion;
+$record->learningobjectives		= $oaCode;
+$record->comunicativepurpose    = $comunicativepurpose;
 $record->genre 					= $generos[$genero];
 $record->audience         		= $fromform->audiencia;
-$record->estimated_time 		= $fromform->tiempoEstimado;
-$record->video_url         		= $fromform->videoUrl;
-$record->instructions 			= $fromform->instructions['text'];
-$record->description         	= $fromform->descripcion;
+$record->estimatedtime 	    	= $fromform->tiempoEstimado;
+$record->instructionstudents	= $fromform->instructions['text'];
+$record->teaching				= $fromform->teaching['text'];
+$record->teachingsuggestions    = $fromform->teachingsuggestions['text'];
+$record->languageresources 		= $fromform->languageresources['text'];
+$record->timecreated			= time();
 $record->userid 				= $USER->id;
-$record->didactic_suggestions 	= $fromform->didacticSuggestions['text'];
-$record->didactic_instructions  = $fromform->didacticInstructions['text'];
-$record->language_resources 	= $fromform->LanguageInstructions['text'];
+$record->rubricid 				= $fromform->rubric;
+
 
 $insert = $DB->insert_record('emarking_activities', $record);
-var_dump($insert);
+
 $url = new moodle_url($CFG->wwwroot.'/local/ciae/activity.php', array('id' => $insert));
-redirect($url, 0);
+//redirect($url, 0);
   //In this case you process validated data. $mform->get_data() returns data posted in form.
 } else {
   // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed

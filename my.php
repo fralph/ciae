@@ -138,7 +138,7 @@ if($countActivities == 1){
 			<div class="col-md-9">
 			<div class="panel panel-default">
 					<div class="panel-body">
-					<h2 class="title">Tú progreso</h2>
+					<h2 class="title">Tu progreso</h2>
 					<div class="col-md-6">
 					<h4>Puntos totales</h4>
 					<h3 class="importante">3.542</h3>

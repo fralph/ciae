@@ -37,7 +37,8 @@ $rubric=$DB->get_records_sql("SELECT grl.id,
     							   {grading_definitions} as gd
 							  WHERE gd.id=? AND grc.definitionid=gd.id AND grc.id=grl.criterionid
 							  ORDER BY grcid, grl.id",
-							  array($activity->rubric_id));
+							  array($activity->rubricid));
+
 
 foreach ($rubric as $data) {
 	
@@ -54,6 +55,17 @@ foreach ($table as $calc) {
 }
 $row=sizeof($table);
 
+$oaComplete=explode("-",$activity->learningobjectives);
+$coursesOA="";
+foreach($oaComplete as $oaPerCourse){
+
+	$firstSplit=explode("[",$oaPerCourse);	
+	$secondSplit=explode("]",$firstSplit[1]);
+	$course=$firstSplit[0];
+	
+	$coursesOA .='<p>Curso: '.$firstSplit[0].'° básico</p>';
+	$coursesOA .='<p>OAs: '.$secondSplit[0].'</p>';
+}
 
 ?>
 <!DOCTYPE html>
@@ -179,11 +191,11 @@ $row=sizeof($table);
 					
 					<p>Título: <?php echo $activity->title; ?></p>
 					<p>Descipción: <?php echo $activity->description;?></p>
-					<p>OA: <?php echo $activity->oa; ?></p>
-					<p>Propósito comunicativo: <?php echo $activity->comunicative_pupose; ?></p>
+					<?php echo $coursesOA; ?>
+					<p>Propósito comunicativo: <?php echo $activity->comunicativepupose; ?></p>
 					<p>Género: <?php echo $activity->genre; ?></p>
 					<p>Audiencia: <?php echo $activity->audience; ?></p>
-					<p>Tiempo estimado: <?php echo $activity->estimated_time; ?> minutos</p>
+					<p>Tiempo estimado: <?php echo $activity->estimatedtime; ?> minutos</p>
 					<p>Creado por: <?php echo $user_object->firstname.' '.$user_object->lastname ?> </p>
 
 
@@ -211,7 +223,7 @@ $row=sizeof($table);
 		<div class="panel panel-default">
 			<div class="panel-body">	
 				<?php 
-				echo $activity->instructions;
+				echo $activity->instructionstudents;
 				?>
 			</div>
 		</div>
@@ -224,7 +236,7 @@ $row=sizeof($table);
 			<div class="panel-body">
 				<h4 style="text-align: left;">Didáctica</h4>	
 				<?php 
-				echo $activity->didactic_suggestions;
+				echo $activity->teaching;
 				?>
 			</div>
 		</div>
@@ -232,7 +244,7 @@ $row=sizeof($table);
 			<div class="panel-body">
 				<h4 style="text-align: left;">Sugerencias</h4>	
 				<?php 
-				echo $activity->didactic_instructions;
+				echo $activity->teachingsuggestions;
 				?>
 
 			</div>
@@ -241,7 +253,7 @@ $row=sizeof($table);
 			<div class="panel-body">
 				<h4 style="text-align: left;">Recursos de la lengua</h4>	
 				<?php 
-				echo $activity->language_resources;
+				echo $activity->languageresources;
 				?>
 
 			</div>

@@ -33,7 +33,16 @@ class local_ciae_create_activity extends moodleform {
         
        require_once ('generos.php');
        array_unshift($generos, "Seleccione un género");
-       $result = $DB->get_records('grading_definitions');
+       $result = $DB->get_records_sql('
+         SELECT gd.id,
+                gd.name,
+                gd.description
+         FROM {grading_definitions} as gd,
+              {grading_areas} as ga
+         WHERE ga.id=gd.areaid AND
+               gd.method=? AND
+               ga.contextid=? AND
+               ga.component=?', array('rubric',1,'core_grading'));
        $rubrics[0]= 'Seleccione una rúbrica';
         foreach ($result as $data) {
             $rubrics[$data->id]=$data->name;
@@ -57,18 +66,66 @@ class local_ciae_create_activity extends moodleform {
         //Curso
         $courseArray=array('0'=>'Seleccione un curso','1'=>'1° básico','2'=>'2° básico','3'=>'3° básico',
             '4'=>'4° básico','5'=>'5° básico','6'=>'6° básico',);
-        $selectCourse =& $mform->createElement('select', 'course', 'curso',$courseArray);
-       //OA
-        $oaArray=array('13'=>'13','14'=>'14','15'=>'15','16'=>'16','17'=>'17','18'=>'18','19'=>'19','20'=>'20','21'=>'21',
-                        '22'=>'22');
-        $selectOA =& $mform->createElement('select', 'oa', 'Objetivo de Aprendizaje',$oaArray);
-        $selectOA->setMultiple(true);
-        //grupo de select Curso-OA
-        $oaArray=array($selectCourse,$selectOA);
-        $mform->addGroup($oaArray,'codigoOA','Objetivo de aprendizaje');
-        $mform->addRule('codigoOA', get_string('required'), 'required');
-        $mform->addHelpButton('codigoOA', 'codigoOA','ciae');
-
+        $mform->addElement('select', 'C1', 'Objetivos de Aprendizaje',$courseArray);
+        $oacheckboxarray = array();
+        //creating days of the week
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA13', '', '13');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA14', '', '14');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA15', '', '15');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA16', '', '16');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA17', '', '17');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA18', '', '18');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA19', '', '19');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA20', '', '20');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA21', '', '21');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA22', '', '22');
+		//display them into one row
+        $mform->addGroup($oacheckboxarray, 'CODC1');
+        $mform->addElement('hidden', 'oacount', 1,array('id'=>'oacount'));
+        $mform->addElement('html', '<div id="CODC2" style="display:none;">');
+        $mform->addElement('select', 'C2', '',$courseArray);
+        $oacheckboxarray2 = array();
+        //creating days of the week
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA13', '', '13');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA14', '', '14');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA15', '', '15');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA16', '', '16');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA17', '', '17');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA18', '', '18');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA19', '', '19');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA20', '', '20');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA21', '', '21');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA22', '', '22');
+        //display them into one row
+        $mform->addGroup($oacheckboxarray2, 'CODC2');
+        $mform->addElement('html', '</div>');
+        
+        $mform->addElement('html', '<div id="CODC3" style="display:none;">');
+        $mform->addElement('select', 'C2', '',$courseArray);
+        $oacheckboxarray2 = array();
+        //creating days of the week
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA13', '', '13');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA14', '', '14');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA15', '', '15');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA16', '', '16');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA17', '', '17');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA18', '', '18');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA19', '', '19');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA20', '', '20');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA21', '', '21');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA22', '', '22');
+        //display them into one row
+        $mform->addGroup($oacheckboxarray2, 'CODC3');
+        $mform->addElement('html', '</div>');
+        
+        
+        $buttonar=array();
+        $buttonar[]=$mform->createElement('button', 'more', '+', array('onclick'=>'showDiv()'));
+        $buttonar[]=$mform->createElement('button', 'less', '-', array('onclick'=>'hideDiv()','style'=>'display:none;'));
+        $mform->addGroup($buttonar, 'buttonarr');
+        
+        
+        
         // Propósito comunicativo
         $mform->addElement('select', 'pc', 'Propósito Comunicativo', $pc);
         $mform->addRule('pc', get_string('required'), 'required'); 
@@ -97,18 +154,90 @@ class local_ciae_create_activity extends moodleform {
 
         //Paso 3 Didáctica
         $mform->addElement('header', 'DI', 'Didáctica', null);
-        $mform->addElement('editor', 'didacticSuggestions', 'Didáctica');
-        $mform->setType('ejemplo', PARAM_RAW);
-        $mform->addElement('editor', 'didacticInstructions', 'Sugerencias');
-        $mform->setType('didacticInstructions', PARAM_RAW);
-        $mform->setAdvanced('didacticInstructions');
-        $mform->addElement('editor', 'LanguageInstructions', 'Recursos del Lenguaje');
-        $mform->setType('LanguageInstructions', PARAM_RAW);
-        $mform->setAdvanced('LanguageInstructions');
+        $mform->addElement('editor', 'teaching', 'Didáctica');
+        $mform->setType('teaching', PARAM_RAW);
+        $mform->addElement('editor', 'teachingsuggestions', 'Sugerencias');
+        $mform->setType('teachingsuggestions', PARAM_RAW);
+        $mform->setAdvanced('teachingsuggestions');
+        $mform->addElement('editor', 'languageresources', 'Recursos del Lenguaje');
+        $mform->setType('languageresources', PARAM_RAW);
+        $mform->setAdvanced('languageresources');
 
         //Paso 4 Rúbrica
         $mform->addElement('header', 'RUB', 'Rúbrica', null);
         $mform->addElement('select', 'rubric', 'Rúbrica', $rubrics);
+        
+        /*
+        $availablefromgroup=array();
+        $availablefromgroup[] =& $mform->createElement('date_selector', 'availablefrom', '');
+        $availablefromgroup[] =& $mform->createElement('checkbox', 'availablefromenabled', '', get_string('enable'));
+        $mform->addGroup($availablefromgroup, 'availablefromgroup', get_string('availablefromdate', 'data'), ' ', false);
+        $mform->disabledIf('availablefromgroup', 'availablefromenabled');
+        document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA13").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA14").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA15").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA16").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA17").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA18").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA19").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA20").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA21").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA22").checked = false;
+        */
+        
+        
+        ?>
+        <script>
+        function showDiv() {
+        	document.getElementById('oacount').value++;
+            if(document.getElementById('oacount').value==2){
+            	document.getElementById("id_buttonarr_less").style.display = "inline";
+            
+             }
+            if(document.getElementById('oacount').value==3){
+            	document.getElementById("id_buttonarr_more").style.display = "none";
+            
+             }
+        		
+        		var num ="CODC"+document.getElementById('oacount').value;
+            	console.log(document.getElementById('oacount').value);
+        	    document.getElementById(num).style.display = "block";
+        	   
+        	}
+        function hideDiv() {
+        
+        var hidden = document.getElementById('oacount').value;
+        var hiddenB =hidden-1;
+        if(hidden==3){
+        	document.getElementById("id_buttonarr_more").style.display = "inline";
+        
+         }
+        if(hidden==2){
+        	document.getElementById("id_buttonarr_less").style.display = "none";
+        
+         }
+        var select = "id_C"+hidden;
+
+        var num ="CODC"+document.getElementById('oacount').value;
+     	document.getElementById(num).style.display = "none";
+     	document.getElementById(select).value=0;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA13").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA14").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA15").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA16").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA17").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA18").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA19").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA20").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA21").checked = false;
+     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA22").checked = false;	   	
+     	
+     	document.getElementById('oacount').value=hiddenB;
+     	
+     	}
+        </script>
+        <?php 
+        
         
         $this->add_action_buttons(true,'enviar');
 
