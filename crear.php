@@ -100,7 +100,7 @@ $record->rubricid 				= $fromform->rubric;
 $insert = $DB->insert_record('emarking_activities', $record);
 
 $url = new moodle_url($CFG->wwwroot.'/local/ciae/activity.php', array('id' => $insert));
-//redirect($url, 0);
+redirect($url, 0);
   //In this case you process validated data. $mform->get_data() returns data posted in form.
 } else {
   // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
