@@ -1,34 +1,74 @@
-<?php
-$p = PDF_new();
 
-/*  open new PDF file; insert a file name to create the PDF on disk */
-if (PDF_begin_document($p, "", "") == 0) {
-    die("Error: " . PDF_get_errmsg($p));
-}
-
-PDF_set_info($p, "Creator", "hello.php");
-PDF_set_info($p, "Author", "Rainer Schaaf");
-PDF_set_info($p, "Title", "Hello world (PHP)!");
-
-PDF_begin_page_ext($p, 595, 842, "");
-
-$font = PDF_load_font($p, "Helvetica-Bold", "winansi", "");
-
-PDF_setfont($p, $font, 24.0);
-PDF_set_text_pos($p, 50, 700);
-PDF_show($p, "Hello world!");
-PDF_continue_text($p, "(says PHP)");
-PDF_end_page_ext($p, "");
-
-PDF_end_document($p, "");
-
-$buf = PDF_get_buffer($p);
-$len = strlen($buf);
-
-header("Content-type: application/pdf");
-header("Content-Length: $len");
-header("Content-Disposition: inline; filename=hello.pdf");
-print $buf;
-
-PDF_delete($p);
-?>
+ <link rel="stylesheet" href="css/bootstrap.min.css">   
+   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container"> 
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+            </button>
+            <a target="_blank" href="#" class="navbar-brand">My sApp.</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Inicio</a></li>
+                <li class="active"><a href="http://bootsnipp.com/snippets/featured/nav-account-manager" target="_blank">Inspirado en este ejemplo</a></li>
+                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">DropDown
+                    <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Link 2</a></li>
+                    </ul>
+                 </li>              
+             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span> 
+                        <strong>Nombre</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
+                                        <p class="text-left small">correoElectronico@email.com</p>
+                                        <p class="text-left">
+                                            <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                            <a href="#" class="btn btn-danger btn-block">Cerrar Sesion</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        </div>
+        </div>
+ 
+        
+    
+    
+  

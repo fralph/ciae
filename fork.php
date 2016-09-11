@@ -5,8 +5,7 @@ GLOBAL $USER, $CFG;
 $teacherroleid = 3;
 $logged = false;
 // Id of the exam to be deleted.
-$activityid = required_param('id', PARAM_INT);
-$forkingUrl = new moodle_url($CFG->wwwroot.'/local/ciae/forking.php', array('id' => $activityid));
+$draftid = required_param('id', PARAM_INT);
 
 
 if (isloggedin ()) {
@@ -23,7 +22,17 @@ if (isloggedin ()) {
 		}
 	}
 }
-$activity=$DB->get_record('emarking_activities',array('id'=>$activityid));
+$draft=$DB->get_record('emarking_activity_draft',array('id'=>$draftid));
+$activity=$DB->get_record('emarking_activities',array('id'=>$draft->activityid));
+if($draft->edited ==1 ){
+$editedActovity=$activity=$DB->get_record('emarking_edited_activities',array('activityid'=>$draft->activityid,'userid'=>$draft->userid));
+$activity->teaching=$editedActovity->teaching;
+$activity->instructions=$editedActovity->instructions;
+$activity->languageresources=$editedActovity->languageresources;
+//$activity->rubricid=$editedActovity->rubricid;
+}
+
+
 $user_object = $DB->get_record('user', array('id'=>$activity->userid));
 
 $rubric=$DB->get_records_sql("SELECT grl.id,
@@ -128,7 +137,7 @@ foreach($oaComplete as $oaPerCourse){
 			<div class="panel panel-default">
 					<div class="panel-body">
   				<center>
-  				<a href="<?php echo $forkingUrl; ?>" class="btn btn-primary" role="button">Utilizar Actividad</a>
+  				<a href="#" class="btn btn-primary" role="button">Utilizar Actividad</a>
  				</center>
 						
 					</div>

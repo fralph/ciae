@@ -5,7 +5,7 @@ require_once('forms/create_activity.php');
  //Código para setear contexto, url, layout
 global $PAGE,$USER, $CFG, $OUTPUT, $DB;
 
-$PAGE->set_pagelayout('base');
+$PAGE->set_pagelayout('embedded');
 
 	echo $OUTPUT->header();
 
@@ -38,7 +38,7 @@ switch ($fromform->pc){
 		$comunicativepurpose="Narrar";
 		break;
 	case 3:
-		$comunicativepurpose="Opinar";
+		$comunicativepurpose="Argumentar";
 		break;
 }
 
@@ -88,9 +88,8 @@ $record->comunicativepurpose    = $comunicativepurpose;
 $record->genre 					= $generos[$genero];
 $record->audience         		= $fromform->audiencia;
 $record->estimatedtime 	    	= $fromform->tiempoEstimado;
-$record->instructionstudents	= $fromform->instructions['text'];
-$record->teaching				= $fromform->teaching['text'];
-$record->teachingsuggestions    = $fromform->teachingsuggestions['text'];
+$record->instructions			= $fromform->instructions['text'];
+$record->teaching   			= $fromform->teaching['text'];
 $record->languageresources 		= $fromform->languageresources['text'];
 $record->timecreated			= time();
 $record->userid 				= $USER->id;

@@ -48,7 +48,7 @@ class local_ciae_create_activity extends moodleform {
             $rubrics[$data->id]=$data->name;
         }
         //pc= Proposito comunicativo, obtenidos de la agencia de calidad
-        $pc=array('Seleccione un propósito comunicativo','Informar','Narrar','Opinar');
+        $pc=array('Seleccione un propósito comunicativo','Argumentar','Informar','Narrar');
 
         $mform = $this->_form; // Don't forget the underscore! 
         // Paso 1 Información básica
@@ -69,53 +69,83 @@ class local_ciae_create_activity extends moodleform {
         $mform->addElement('select', 'C1', 'Objetivos de Aprendizaje',$courseArray);
         $oacheckboxarray = array();
         //creating days of the week
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA13', '', '13');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA14', '', '14');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA15', '', '15');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA16', '', '16');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA17', '', '17');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA18', '', '18');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA19', '', '19');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA20', '', '20');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA21', '', '21');
-        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA22', '', '22');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','13  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA13');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','14  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA14');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','15  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA15');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','16  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA16');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','17  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA17');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','18  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA18');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','19  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA19');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','20  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA20');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','21  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA21');
+        $oacheckboxarray[] =& $mform->createElement('static', '', '','22  ');
+        $oacheckboxarray[] =& $mform->createElement('checkbox', 'C1OA22');
 		//display them into one row
-        $mform->addGroup($oacheckboxarray, 'CODC1');
+        $mform->addGroup($oacheckboxarray, 'CODC1', null,'',false);
         $mform->addElement('hidden', 'oacount', 1,array('id'=>'oacount'));
         $mform->addElement('html', '<div id="CODC2" style="display:none;">');
         $mform->addElement('select', 'C2', '',$courseArray);
         $oacheckboxarray2 = array();
         //creating days of the week
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA13', '', '13');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA14', '', '14');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA15', '', '15');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA16', '', '16');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA17', '', '17');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA18', '', '18');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA19', '', '19');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA20', '', '20');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA21', '', '21');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA22', '', '22');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','13 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA13');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','14 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA14');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','15 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA15');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','16 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA16');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','17 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA17');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','18 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA18');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','19 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA19');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','20 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA20');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','21 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA21');
+        $oacheckboxarray2[] =& $mform->createElement('static', '', '','22 ');
+        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C2OA22');
         //display them into one row
         $mform->addGroup($oacheckboxarray2, 'CODC2');
         $mform->addElement('html', '</div>');
         
         $mform->addElement('html', '<div id="CODC3" style="display:none;">');
-        $mform->addElement('select', 'C2', '',$courseArray);
-        $oacheckboxarray2 = array();
+        $mform->addElement('select', 'C3', '',$courseArray);
+        $oacheckboxarray3 = array();
         //creating days of the week
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA13', '', '13');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA14', '', '14');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA15', '', '15');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA16', '', '16');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA17', '', '17');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA18', '', '18');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA19', '', '19');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA20', '', '20');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA21', '', '21');
-        $oacheckboxarray2[] =& $mform->createElement('checkbox', 'C3OA22', '', '22');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','13 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA13');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','14 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA14');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','15 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA15');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','16 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA16');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','17 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA17');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','18 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA18');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','19 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA19');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','20 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA20');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','21 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA21');
+        $oacheckboxarray3[] =& $mform->createElement('static', '', '','22 ');
+        $oacheckboxarray3[] =& $mform->createElement('checkbox', 'C3OA22');
         //display them into one row
-        $mform->addGroup($oacheckboxarray2, 'CODC3');
+        $mform->addGroup($oacheckboxarray3, 'CODC3');
         $mform->addElement('html', '</div>');
         
         
@@ -147,45 +177,25 @@ class local_ciae_create_activity extends moodleform {
         $mform->setType('tiempoEstimado', PARAM_TEXT);      
 
         //Paso 2 Instrucciones
-        $mform->addElement('header', 'IA', 'Instrucciones para el Alumno', null);
-        $mform->addElement('static', '', '','Cree las instrucciones que se entregarán a los alumnos.');
+        $mform->addElement('header', 'IA', 'Instrucciones para el estudiante', null);
+        $mform->addElement('static', '', '','Cree las instrucciones que se entregarán a los estudiantes.');
         $mform->addElement('editor', 'instructions', 'Instrucciones');
         $mform->setType('ejemplo', PARAM_RAW);
 
         //Paso 3 Didáctica
         $mform->addElement('header', 'DI', 'Didáctica', null);
-        $mform->addElement('editor', 'teaching', 'Didáctica');
-        $mform->setType('teaching', PARAM_RAW);
-        $mform->addElement('editor', 'teachingsuggestions', 'Sugerencias');
+        $mform->addElement('editor', 'teaching', 'Sugerencias');
         $mform->setType('teachingsuggestions', PARAM_RAW);
-        $mform->setAdvanced('teachingsuggestions');
+        //$mform->setAdvanced('teachingsuggestions');
         $mform->addElement('editor', 'languageresources', 'Recursos del Lenguaje');
         $mform->setType('languageresources', PARAM_RAW);
-        $mform->setAdvanced('languageresources');
+        //$mform->setAdvanced('languageresources');
 
         //Paso 4 Rúbrica
-        $mform->addElement('header', 'RUB', 'Rúbrica', null);
-        $mform->addElement('select', 'rubric', 'Rúbrica', $rubrics);
+        $mform->addElement('header', 'RUB', 'Evaluación', null);
+        $mform->addElement('select', 'rubric', 'Evaluación', $rubrics);
         
-        /*
-        $availablefromgroup=array();
-        $availablefromgroup[] =& $mform->createElement('date_selector', 'availablefrom', '');
-        $availablefromgroup[] =& $mform->createElement('checkbox', 'availablefromenabled', '', get_string('enable'));
-        $mform->addGroup($availablefromgroup, 'availablefromgroup', get_string('availablefromdate', 'data'), ' ', false);
-        $mform->disabledIf('availablefromgroup', 'availablefromenabled');
-        document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA13").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA14").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA15").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA16").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA17").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA18").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA19").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA20").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA21").checked = false;
-     	document.getElementById("id_CODC"+hidden+"_C"+hidden+"OA22").checked = false;
-        */
-        
-        
+            
         ?>
         <script>
         function showDiv() {
