@@ -95,6 +95,8 @@ class local_ciae_edit_activity extends moodleform {
 		//display them into one row
         $mform->addGroup($oacheckboxarray, 'CODC1');
        
+        $mform->addElement('hidden', 'id');
+        $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'oacount', 1,array('id'=>'oacount'));
         $mform->setType('oacount', PARAM_INT);
         $mform->addElement('html', '<div id="CODC2" style="display:none;">');
@@ -258,17 +260,5 @@ class local_ciae_edit_activity extends moodleform {
 
     }
     //Custom validation should be added here
-    function validation($data, $files) {
-        
-        if ($data[genero]==0) {
-            $errors ['genero'] = 'Debe seleccionar un género';
-        }
-        if ($data[rubric]==0) {
-            $errors ['rubric'] = 'Debe seleccionar una rúbrica';
-        }
-        if ($data[pc]==0) {
-            $errors ['pc'] = 'Debe seleccionar un propósito comunicativo';
-        }
-    return $errors;
-    }
+    
 }

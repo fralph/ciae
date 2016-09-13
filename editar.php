@@ -3,21 +3,25 @@ require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/config.php');
 //include simplehtml_form.php
 require_once('forms/edit_activity.php');
 require ('generos.php');
+
  //Código para setear contexto, url, layout
 global $PAGE,$USER, $OUTPUT, $DB;
 $forkid = required_param('id', PARAM_INT);
+
 $PAGE->set_pagelayout('embedded');
 require_login();
 $PAGE->set_context(context_system::instance());
 $url = new moodle_url($CFG->wwwroot.'/local/ciae/edit.php');
 $PAGE->set_url($url);
 	echo $OUTPUT->header();
+	
 $fork=$DB->get_record('emarking_activities',array('id'=>$forkid));
 if($fork->userid != $USER->id){
 		print_error('No tienes permiso para editar esta actividad.');
 	
 }
-
+	
+	
 //Instantiate simplehtml_form 
 $mform = new local_ciae_edit_activity();
 
@@ -26,8 +30,7 @@ if ($mform->is_cancelled()) {
     //Handle form cancel operation, if cancel button is present on form
 } else if ($fromform = $mform->get_data()) {
 	
-	
-	
+
 	if($fork->instructions != $fromform->instructions['text'] || 
 	   $fork->teaching !=	$fromform->teaching['text'] ||
 	   $fork->languageresources	!= $fromform->languageresources['text'] ||
