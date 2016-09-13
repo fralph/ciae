@@ -78,7 +78,22 @@ $rubric=$DB->get_records_sql($sql);
 
 function show_result($data){
 	GLOBAL $CFG;
+	
 	$activityUrl= new moodle_url($CFG->wwwroot.'/local/ciae/activity.php',array('id'=>$data->id));
+	$oaComplete=explode("-",$data->learningobjectives);
+	$coursesOA="";
+	foreach($oaComplete as $oaPerCourse){
+	
+		$firstSplit=explode("[",$oaPerCourse);
+		$secondSplit=explode("]",$firstSplit[1]);
+		$course=$firstSplit[0];
+	
+		$coursesOA .='<p>Curso: '.$firstSplit[0].'° básico</p>';
+		$coursesOA .='<p>OAs: '.$secondSplit[0].'</p>';
+	}
+	
+	
+	
 	$show='<a href="'.$activityUrl.'">';
 	$show.='<div id="resultados" class="col-md-12" style="text-align: left">';
 	$show.='<div class="panel panel-default">';
@@ -86,15 +101,11 @@ function show_result($data){
 	$show.='<div id="descripcion" class="panel-body">';
 	$show.='<center><h3>'.$data->title.'</h3></center>';
 	$show.='<div  class="col-md-4" style="text-align: left">';
+	$show.=$coursesOA;
 	$show.='<p>Propósito Comunicativo: Informar</p>';
-	$show.='<p>Género: '.$generos[$data->genre].$data->genre.'</p>';
+	$show.='<p>Género: '.$data->genre.'</p>';
 	$show.='<p>Audiencia: '.$data->audience.'</p>';
-	$show.='<p>Duración: 90 min.</p>';
-	$show.='<p>Contiene:';
-	$show.='<span class="glyphicon glyphicon-film" aria-hidden="false"></span>';
-	$show.='<span class="glyphicon glyphicon-book" aria-hidden="false"></span>';
-	$show.='<span class="glyphicon glyphicon-print" aria-hidden="false"></span>';
-	$show.='</p>';
+	$show.='<p>Tiempo estimado: 90 min.</p>';
 	$show.='</div>';
 	$show.='<div  class="col-md-5">';
 	$show.='<p>'.$data->description.'</p>';

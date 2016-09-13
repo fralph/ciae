@@ -114,7 +114,38 @@ $(function() {
 <!-- FIN BARRA DE INFORMACIÓN DE RESULTADO -->	
 
 <!-- RESULTADOS -->
-<?php include_once 'resultados.php';?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+	switch ($_POST['type']){
+	case 1:
+		$search=$_POST['search'];
+		$sql="SELECT *
+			  FROM {emarking_activities}
+			  Where title like '%$search%' OR 
+					description like '%$search%' OR
+					audience like '%$search%' OR
+					instructions like '%$search%' OR
+					teaching like '%$search%' OR
+					languageresources like '%$search%'";
+		$results = $DB->get_records_sql($sql);
+		break;
+	case 2;
+	
+		break;
+	case 3:
+		$results=$DB->get_records('emarking_activities',array('comunicativepurpose'=>$_POST['pc']));
+		break;
+	case 4:
+		$results=$DB->get_records('emarking_activities',array('genre'=>$_POST['genero']));
+		
+		break;
+	}
+	
+include_once 'resultados.php';
+}
+
+?>
 <!-- FIN RESULTADOS -->	
 </body>
 <!-- footer starts here -->

@@ -39,7 +39,7 @@ $(document).ready(function () {
 
 });
 </script>
-<form action="">
+<form action="" method="post">
 <section class="buscar text-center">
 	<h3></h3>
 		<h3></h3>
@@ -56,10 +56,10 @@ $(document).ready(function () {
 				<div class="row">
 				<div class="form-group">
 				<div class="col-md-8">
-				<label><input type="radio" id="radio1" name="type" value="general" checked> Búsqueda General</label>
-       			 <label><input type="radio" id="radio2" name="type" value="oa"> Objetivo de aprendizaje</label>
-       			 <label><input type="radio" id="radio3" name="type" value="pc"> Propósito comunicativo</label>
-        		<label><input type="radio" id="radio4" name="type" value="genre"> Género</label>
+				<label><input type="radio" id="radio1" name="type" value="1" checked> Búsqueda General</label>
+       			 <label><input type="radio" id="radio2" name="type" value="2"> Objetivo de aprendizaje</label>
+       			 <label><input type="radio" id="radio3" name="type" value="3"> Propósito comunicativo</label>
+        		<label><input type="radio" id="radio4" name="type" value="4"> Género</label>
         		
 				</div>
 				</div>
@@ -69,7 +69,7 @@ $(document).ready(function () {
 				
 					<div class="form-group">
 						<div class="col-md-8">
-							<input class="recursos"  type="text" name="name">
+							<input class="recursos"  type="text" name="search">
 						</div>
 						<div class="col-md-3">
 							<button type="submit" class="btn btn-default btn-lg">Buscar</button>
@@ -81,20 +81,20 @@ $(document).ready(function () {
 						<div class="col-md-8">
 					 	<select name="oa">
 							<option value="">Seleccione un curso</option>
-   						 <option>5° básico</option>
-  				<option>6° básico</option>
+   						 <option>5°</option>
+  				<option>6°</option>
  			 
    						 </select>
-   			<label>13 <input type="checkbox" id="cbox1" value="13"></label>
-   			<label>14 <input type="checkbox" id="cbox1" value="14"></label>
-   			<label>15 <input type="checkbox" id="cbox1" value="15"></label>
-   			<label>16 <input type="checkbox" id="cbox1" value="16"></label>
-   			<label>17 <input type="checkbox" id="cbox1" value="17"></label>
-   			<label>18 <input type="checkbox" id="cbox1" value="18"></label>
-   			<label>19 <input type="checkbox" id="cbox1" value="19"></label>
-   			<label>20 <input type="checkbox" id="cbox1" value="20"></label>
-   			<label>21 <input type="checkbox" id="cbox1" value="21"></label>
-   			<label>22 <input type="checkbox" id="cbox1" value="22"></label>
+   			<label>13 <input type="checkbox" name="13" ></label>
+   			<label>14 <input type="checkbox"  name="14"></label>
+   			<label>15 <input type="checkbox" name="15"></label>
+   			<label>16 <input type="checkbox"  name="16"></label>
+   			<label>17 <input type="checkbox"  name="17"></label>
+   			<label>18 <input type="checkbox"  name="18"></label>
+   			<label>19 <input type="checkbox" name="19"></label>
+   			<label>20 <input type="checkbox"  name="20"></label>
+   			<label>21 <input type="checkbox" name="21"></label>
+   			<label>22 <input type="checkbox"  name="22"></label>
 						</div>
 						<div class="col-md-3">
 							<button type="submit" class="btn btn-default btn-lg">Buscar</button>

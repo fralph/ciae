@@ -1,3 +1,6 @@
+<?php 
+require_once ('locallib.php');
+?>
 <section class="barraResultado">
 <hr>
 	<div class="container">
@@ -112,54 +115,15 @@
 			</div>
 		</div>
 		<div id="resultados" class="col-md-9" style="text-align: left">
-			
-			<div class="panel panel-default">
-			<div class="single-result-detail clearfix">
-			<div data-toggle="modal" data-target="#myModal">
-			
-				<div id="descripcion" class="panel-body">
-			<center><h3>Amigos por correspondencia</h3></center>
-					<div  class="col-md-4" style="text-align: left">
-						<p>Propósito Comunicativo: Informar</p>
-						<p>Género: Carta de presentación personal</p>
-						<p>Audiencia: Amigo</p>
-						<p>Tiempo estimado: 90 min.</p>
-						<p>Contiene: 
-							<span class="glyphicon glyphicon-film" aria-hidden="false"></span>
-							<span class="glyphicon glyphicon-book" aria-hidden="false"></span>
-							<span class="glyphicon glyphicon-print" aria-hidden="false"></span>
-						</p>
-					</div>
-					<div  class="col-md-5">
-						<p>El producto final es una carta
-							de dos párrafos de extensión destinada a un amigo de un
-							curso paralelo, de un colegio cercano o de séptimo año,
-							según resulte más adecuado a la realidad del colegio El
-							producto final es una carta de dos párrafos de extensión
-							destinada a un amigo de un curso paralelo, de un colegio
-							cercano o de séptimo año, según resulte más adecuado a la
-							realidad del colegio</p>
-					</div>
-					<div  class="col-md-3" style="text-align: left">
-					<img src="img/premio.png" class="premio" height="40px" width="40px">
-					<p>55 Visitas</p>
-					<p>3 Comentarios</p>
-					<p>20 votos</p>
-					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-					<p></p><p></p>
-					<p style="font-size: 14px;">Creado por:<a href="perfil.html"> Natalia Ávila</a></p>
-					
-					</div>
-				</div>
-			</div>	
-			</div>
-			</div>
-			
-			
+			<?php 
+			if(count($results)!=0){
+			foreach($results as $result){
+				echo show_result($result);
+			}
+			}else{
+				echo '<h3>No se encontraron resultados</h3>';
+			}
+			?>
 			</div>	
 			</div>
 			</div>
