@@ -8,7 +8,7 @@ require_once ('locallib.php');
 			<div class="col-md-1">
 			</div>
 			<div class="col-md-8">
-				<p>3 Resultado(s) </p>
+				<p><?php echo count($results);?> Resultado(s) </p>
 				
 			</div>
 			<div class="col-md-2">
