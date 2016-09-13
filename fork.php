@@ -5,8 +5,12 @@ GLOBAL $USER, $CFG;
 $teacherroleid = 3;
 $logged = false;
 // Id of the exam to be deleted.
-$draftid = required_param('id', PARAM_INT);
-
+$forkid = required_param('id', PARAM_INT);
+$editUrl = new moodle_url($CFG->wwwroot.'/local/ciae/edit.php', array('id' => $forkid));
+require_login();
+$PAGE->set_context(context_system::instance());
+$url = new moodle_url($CFG->wwwroot.'/local/ciae/fork.php');
+$PAGE->set_url($url);
 
 if (isloggedin ()) {
 	$logged = true;
@@ -22,18 +26,14 @@ if (isloggedin ()) {
 		}
 	}
 }
-$draft=$DB->get_record('emarking_activity_draft',array('id'=>$draftid));
-$activity=$DB->get_record('emarking_activities',array('id'=>$draft->activityid));
-if($draft->edited ==1 ){
-$editedActovity=$activity=$DB->get_record('emarking_edited_activities',array('activityid'=>$draft->activityid,'userid'=>$draft->userid));
-$activity->teaching=$editedActovity->teaching;
-$activity->instructions=$editedActovity->instructions;
-$activity->languageresources=$editedActovity->languageresources;
-//$activity->rubricid=$editedActovity->rubricid;
+
+$fork=$DB->get_record('emarking_activities',array('id'=>$forkid));
+if($fork->userid != $USER->id){
+	print_error('No tienes permiso para revisar esta actividad.');
+	
 }
 
-
-$user_object = $DB->get_record('user', array('id'=>$activity->userid));
+$user_object = $DB->get_record('user', array('id'=>$fork->userid));
 
 $rubric=$DB->get_records_sql("SELECT grl.id,
 									 grc.id as grcid,
@@ -47,7 +47,7 @@ $rubric=$DB->get_records_sql("SELECT grl.id,
     							   {grading_definitions} as gd
 							  WHERE gd.id=? AND grc.definitionid=gd.id AND grc.id=grl.criterionid
 							  ORDER BY grcid, grl.id",
-							  array($activity->rubricid));
+							  array($fork->rubricid));
 
 
 foreach ($rubric as $data) {
@@ -65,7 +65,7 @@ foreach ($table as $calc) {
 }
 $row=sizeof($table);
 
-$oaComplete=explode("-",$activity->learningobjectives);
+$oaComplete=explode("-",$fork->learningobjectives);
 $coursesOA="";
 foreach($oaComplete as $oaPerCourse){
 
@@ -137,7 +137,7 @@ foreach($oaComplete as $oaPerCourse){
 			<div class="panel panel-default">
 					<div class="panel-body">
   				<center>
-  				<a href="#" class="btn btn-primary" role="button">Utilizar Actividad</a>
+  				<a href="<?php echo $editUrl; ?>" class="btn btn-primary" role="button">Editar Actividad</a>
  				</center>
 						
 					</div>
@@ -146,13 +146,13 @@ foreach($oaComplete as $oaPerCourse){
 					<div class="panel-body">
 					<h3>Resumen</h3>
 					
-					<p>Título: <?php echo $activity->title; ?></p>
-					<p>Descipción: <?php echo $activity->description;?></p>
+					<p>Título: <?php echo $fork->title; ?></p>
+					<p>Descipción: <?php echo $fork->description;?></p>
 					<?php echo $coursesOA; ?>
-					<p>Propósito comunicativo: <?php echo $activity->comunicativepupose; ?></p>
-					<p>Género: <?php echo $activity->genre; ?></p>
-					<p>Audiencia: <?php echo $activity->audience; ?></p>
-					<p>Tiempo estimado: <?php echo $activity->estimatedtime; ?> minutos</p>
+					<p>Propósito comunicativo: <?php echo $fork->comunicativepurpose; ?></p>
+					<p>Género: <?php echo $fork->genre; ?></p>
+					<p>Audiencia: <?php echo $fork->audience; ?></p>
+					<p>Tiempo estimado: <?php echo $fork->estimatedtime; ?> minutos</p>
 					<p>Creado por: <?php echo $user_object->firstname.' '.$user_object->lastname ?> </p>
 
 
@@ -164,7 +164,7 @@ foreach($oaComplete as $oaPerCourse){
 			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-body" >
-					<h2 class="title"> <?php echo $activity->title ?> </h2>
+					<h2 class="title"> <?php echo $fork->title ?> </h2>
 					
  
   <ul class="nav nav-tabs">
@@ -180,7 +180,7 @@ foreach($oaComplete as $oaPerCourse){
 		<div class="panel panel-default">
 			<div class="panel-body">	
 				<?php 
-				echo $activity->instructions;
+				echo $fork->instructions;
 				?>
 			</div>
 		</div>
@@ -194,7 +194,7 @@ foreach($oaComplete as $oaPerCourse){
 			<div class="panel-body">
 				<h4 style="text-align: left;">Sugerencias</h4>	
 				<?php 
-				echo $activity->teaching;
+				echo $fork->teaching;
 				?>
 
 			</div>
@@ -203,7 +203,7 @@ foreach($oaComplete as $oaPerCourse){
 			<div class="panel-body">
 				<h4 style="text-align: left;">Recursos de la lengua</h4>	
 				<?php 
-				echo $activity->languageresources;
+				echo $fork->languageresources;
 				?>
 
 			</div>

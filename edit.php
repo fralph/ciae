@@ -51,10 +51,10 @@
 	<div class="container">
 		<div class="row">
 		<h3></h3>
-		<h2>Crear una actividad</h2>
+		<h2>Editar actividad</h2>
 		<div class="col-md-2"></div>
 		<div class="col-md-7">
-		<?php include 'crear.php'; ?>
+		<?php include 'editar.php'; ?>
 		</div>			
 	</div>
 </section><!-- FIN BUSCADOR -->

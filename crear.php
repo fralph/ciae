@@ -6,10 +6,11 @@ require_once('forms/create_activity.php');
 global $PAGE,$USER, $CFG, $OUTPUT, $DB;
 
 $PAGE->set_pagelayout('embedded');
-
-	echo $OUTPUT->header();
-
-	
+require_login();
+$PAGE->set_context(context_system::instance());
+$url = new moodle_url($CFG->wwwroot.'/local/ciae/create.php');
+$PAGE->set_url($url);
+echo $OUTPUT->header();
 
 //Instantiate simplehtml_form 
 $mform = new local_ciae_create_activity();
@@ -29,22 +30,13 @@ foreach($fromform->codigoOA['oa'] as $data){
 $oaCode .=']';
 $instructions=$fromform->instructions['text'];
 $suggestion=$fromform->didacticSuggestions['text'];
-$genero=(int)$fromform->genero-1;
-switch ($fromform->pc){
-	case 1:
-		$comunicativepurpose="Informar";
-		break;
-	case 2:
-		$comunicativepurpose="Narrar";
-		break;
-	case 3:
-		$comunicativepurpose="Argumentar";
-		break;
-}
+$genero=(int)$fromform->genre-1;
+
 
 //echo $fromform->C1;
 $OAC1 ="";
 if(isset($fromform->C1)){
+
 	if(isset($fromform->CODC1)){
 		foreach($fromform->CODC1 as $key =>$value){
 			$porciones = explode("C1OA", $key);
@@ -81,19 +73,19 @@ if(isset($fromform->C3)){
 $oaCode=$OAC1.$OAC2.$OAC3;
 
 $record = new stdClass();
-$record->title 					= $fromform->titulo;
-$record->description         	= $fromform->descripcion;
+$record->title 					= $fromform->title;
+$record->description         	= $fromform->description;
 $record->learningobjectives		= $oaCode;
-$record->comunicativepurpose    = $comunicativepurpose;
+$record->comunicativepurpose    = $fromform->comunicativepurpose;
 $record->genre 					= $generos[$genero];
-$record->audience         		= $fromform->audiencia;
-$record->estimatedtime 	    	= $fromform->tiempoEstimado;
+$record->audience         		= $fromform->audience;
+$record->estimatedtime 	    	= $fromform->estimatedtime;
 $record->instructions			= $fromform->instructions['text'];
 $record->teaching   			= $fromform->teaching['text'];
 $record->languageresources 		= $fromform->languageresources['text'];
 $record->timecreated			= time();
 $record->userid 				= $USER->id;
-$record->rubricid 				= $fromform->rubric;
+$record->rubricid 				= $fromform->rubricid;
 
 
 $insert = $DB->insert_record('emarking_activities', $record);

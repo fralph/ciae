@@ -7,6 +7,7 @@ $logged = false;
 // Id of the exam to be deleted.
 $activityid = required_param('id', PARAM_INT);
 $forkingUrl = new moodle_url($CFG->wwwroot.'/local/ciae/forking.php', array('id' => $activityid));
+$editUrl = new moodle_url($CFG->wwwroot.'/local/ciae/edit.php', array('id' => $activityid));
 
 
 if (isloggedin ()) {
@@ -128,7 +129,14 @@ foreach($oaComplete as $oaPerCourse){
 			<div class="panel panel-default">
 					<div class="panel-body">
   				<center>
-  				<a href="<?php echo $forkingUrl; ?>" class="btn btn-primary" role="button">Utilizar Actividad</a>
+  				<?php
+  				if($activity->userid == $USER->id){
+  					echo '<a href="'.$editUrl.'" class="btn btn-primary" role="button">Editar Actividad</a>';
+  				}else{
+  					echo '<a href="'.$forkingUrl.'" class="btn btn-primary" role="button">Utilizar Actividad</a>';
+  				}
+  				?>
+  				
  				</center>
 						
 					</div>
@@ -140,7 +148,7 @@ foreach($oaComplete as $oaPerCourse){
 					<p>Título: <?php echo $activity->title; ?></p>
 					<p>Descipción: <?php echo $activity->description;?></p>
 					<?php echo $coursesOA; ?>
-					<p>Propósito comunicativo: <?php echo $activity->comunicativepupose; ?></p>
+					<p>Propósito comunicativo: <?php echo $activity->comunicativepurpose; ?></p>
 					<p>Género: <?php echo $activity->genre; ?></p>
 					<p>Audiencia: <?php echo $activity->audience; ?></p>
 					<p>Tiempo estimado: <?php echo $activity->estimatedtime; ?> minutos</p>

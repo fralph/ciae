@@ -1,74 +1,69 @@
+<?php
+require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/config.php');
+//include simplehtml_form.php
+require_once('forms/edit_activity.php');
+ //Código para setear contexto, url, layout
+global $PAGE,$USER, $OUTPUT, $DB;
+$forkid = required_param('id', PARAM_INT);
+$PAGE->set_pagelayout('embedded');
 
- <link rel="stylesheet" href="css/bootstrap.min.css">   
-   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container"> 
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span> 
-            </button>
-            <a target="_blank" href="#" class="navbar-brand">My sApp.</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#">Inicio</a></li>
-                <li class="active"><a href="http://bootsnipp.com/snippets/featured/nav-account-manager" target="_blank">Inspirado en este ejemplo</a></li>
-                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">DropDown
-                    <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Link 2</a></li>
-                    </ul>
-                 </li>              
-             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-user"></span> 
-                        <strong>Nombre</strong>
-                        <span class="glyphicon glyphicon-chevron-down"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="navbar-login">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <p class="text-center">
-                                            <span class="glyphicon glyphicon-user icon-size"></span>
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
-                                        <p class="text-left small">correoElectronico@email.com</p>
-                                        <p class="text-left">
-                                            <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="navbar-login navbar-login-session">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p>
-                                            <a href="#" class="btn btn-danger btn-block">Cerrar Sesion</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        </div>
-        </div>
+	echo $OUTPUT->header();
+
+
+//Instantiate simplehtml_form 
+$mform = new local_ciae_edit_activity();
+ var_dump($mform->get_data());
+//Form processing and displaying is done here
+if ($mform->is_cancelled()) {
+    //Handle form cancel operation, if cancel button is present on form
+} else if ($fromform = $mform->get_data()) {
+
+
+var_dump($fromform);
+
+die('a');
+
+$record = new stdClass();
+$record->draftid				= $fromform->id;
+$record->instructions			= $fromform->instructions['text'];
+$record->teaching   			= $fromform->teaching['text'];
+$record->languageresources 		= $fromform->languageresources['text'];
+$record->timecreated			= time();
+$record->rubricid 				= $fromform->rubricid;
+
+
+//$insert = $DB->insert_record('emarking_activities', $record);
+
+//$url = new moodle_url($CFG->wwwroot.'/local/ciae/activity.php', array('id' => $insert));
+//redirect($url, 0);
+  //In this case you process validated data. $mform->get_data() returns data posted in form.
+} else {
+	$draft=$DB->get_record('emarking_activity_draft',array('id'=>$forkid));
+	$activity=$DB->get_record('emarking_activities',array('id'=>$draft->activityid));
+	$formData = new stdClass();
+	
+	if($draft->edited ==1 ){
+	$editedActovity=$activity=$DB->get_record('emarking_edited_activities',array('draftid'=>$draft->id,'userid'=>$draft->userid));
+	$activity->teaching=$editedActovity->teaching;
+	$activity->instructions=$editedActovity->instructions;
+	$activity->languageresources=$editedActovity->languageresources;
+	$formData->editedid		= $editedActovity->id;
+	//$activity->rubricid=$editedActovity->rubricid;
+	}
+
+
+ $formData->instructions['text']		= $activity->instructions;
+ $formData->teaching['text']  			= $activity->teaching;
+ $formData->languageresources['text'] 	= $activity->languageresources;
+ $formData->rubricid 					= $activity->rubricid;
+ $formData->forkid 						= $forkid;
+ $mform->set_data($formData);
  
-        
-    
-    
-  
+  $mform->display();
+}
+
+
+//Código para setear contexto, url, layout
+echo $OUTPUT->footer();
+
+?>
