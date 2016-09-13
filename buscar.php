@@ -122,22 +122,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$search=$_POST['search'];
 		$sql="SELECT *
 			  FROM {emarking_activities}
-			  Where title like '%$search%' OR 
+			  WHERE parent IS NULL AND 
+			  		(title like '%$search%' OR 
 					description like '%$search%' OR
 					audience like '%$search%' OR
 					instructions like '%$search%' OR
 					teaching like '%$search%' OR
-					languageresources like '%$search%'";
+					languageresources like '%$search%')";
 		$results = $DB->get_records_sql($sql);
 		break;
 	case 2;
 	
 		break;
 	case 3:
-		$results=$DB->get_records('emarking_activities',array('comunicativepurpose'=>$_POST['pc']));
+		$results=$DB->get_records('emarking_activities',array('comunicativepurpose'=>$_POST['pc'],'parent'=>null));
 		break;
 	case 4:
-		$results=$DB->get_records('emarking_activities',array('genre'=>$_POST['genero']));
+		$results=$DB->get_records('emarking_activities',array('genre'=>$_POST['genero'],'parent'=>null));
 		
 		break;
 	}
