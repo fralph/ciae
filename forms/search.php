@@ -56,7 +56,7 @@ $(document).ready(function () {
 				<div class="row">
 				<div class="form-group">
 				<div class="col-md-8">
-				<label><input type="radio" id="radio1" name="type" value="1" checked> Búsqueda General</label>
+				<label><input type="radio" id="radio1" name="type" value="1" checked> Búsqueda </label>
        			 <label><input type="radio" id="radio2" name="type" value="2"> Objetivo de aprendizaje</label>
        			 <label><input type="radio" id="radio3" name="type" value="3"> Propósito comunicativo</label>
         		<label><input type="radio" id="radio4" name="type" value="4"> Género</label>
@@ -69,14 +69,19 @@ $(document).ready(function () {
 				
 					<div class="form-group">
 						<div class="col-md-8">
-							<input class="recursos"  type="text" name="search">
+						<?php if ($_SERVER['REQUEST_METHOD'] == 'POST' & $_POST['type']==1){
+					echo '<input class="recursos"  type="text" name="search" value="'.$_POST['search'].'">';
+						}else{
+							echo '<input class="recursos"  type="text" name="search">';
+						}?>
+							
 						</div>
 						<div class="col-md-3">
 							<button type="submit" class="btn btn-default btn-lg">Buscar</button>
 						</div>
-					</div>
-					</div>
-				<div class="row" id="oa" style="display:none;">
+					</div>  
+					</div> 
+				<div class="row" id="oa" style="display:none;"> 
 				<div class="form-group">
 						<div class="col-md-8">
 					 	<select name="oa">

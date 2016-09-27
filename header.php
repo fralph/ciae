@@ -22,7 +22,7 @@ $myUrl=new moodle_url($CFG->wwwroot.'/local/ciae/my.php');
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="#">Inicio</a></li>
-                <li class=""><a href="<?php echo $searchUrl; ?>" target="_blank">Buscar Actividad</a></li>
+                <li class=""><a href="<?php echo $searchUrl; ?>" target="_blank">Actividades</a></li>
                  <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Información
                     <span class="caret"></span>
@@ -34,12 +34,25 @@ $myUrl=new moodle_url($CFG->wwwroot.'/local/ciae/my.php');
                     </ul>
                  </li>              
              </ul>
+            <ul class="nav navbar-nav navbar-right">
+          <li>
+        	<form class="navbar-form" role="search" method="post" action="buscar.php">
+        	<div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar Actividades" name="search">
+            <input type="hidden" name="type" value="1">
+            <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+       		 </div>
+       		 </form>
+       		 </li>
+            
              <?php if (isloggedin ()) {
              	$image=new moodle_url($CFG->wwwroot.'/user/pix.php/'.$USER->id.'/f1.jpg');
              	 
              	?>
              
-            <ul class="nav navbar-nav navbar-right">
+           
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-user"></span> 
@@ -80,9 +93,9 @@ $myUrl=new moodle_url($CFG->wwwroot.'/local/ciae/my.php');
                         </li>
                     </ul>
                 </li>
-            </ul>
+            
             <?php }else{?>
-            <ul class="nav navbar-nav navbar-right">
+           
                 <li>
                 <?php 
 							$loginUrl=new moodle_url($CFG->wwwroot.'/login/index.php');
@@ -95,8 +108,9 @@ $myUrl=new moodle_url($CFG->wwwroot.'/local/ciae/my.php');
                     </a>
                     
                </li>
-            </ul>
+            
             <?php }?>
+        </ul>
         </div>
         </div>
         </div>
