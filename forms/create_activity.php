@@ -257,17 +257,5 @@ class local_ciae_create_activity extends moodleform {
 
     }
     //Custom validation should be added here
-    function validation($data, $files) {
-        
-        if ($data[genero]==0) {
-            $errors ['genero'] = 'Debe seleccionar un género';
-        }
-        if ($data[rubric]==0) {
-            $errors ['rubric'] = 'Debe seleccionar una rúbrica';
-        }
-        if ($data[pc]==0) {
-            $errors ['pc'] = 'Debe seleccionar un propósito comunicativo';
-        }
-    return $errors;
-    }
+    
 }
