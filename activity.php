@@ -8,7 +8,7 @@ $logged = false;
 $activityid = required_param('id', PARAM_INT);
 $forkingUrl = new moodle_url($CFG->wwwroot.'/local/ciae/forking.php', array('id' => $activityid));
 $editUrl = new moodle_url($CFG->wwwroot.'/local/ciae/edit.php', array('id' => $activityid));
-
+$pdfUrl = new moodle_url($CFG->wwwroot.'/local/ciae/pdfcreator.php', array('id' => $activityid));
 
 if (isloggedin ()) {
 	$logged = true;
@@ -175,7 +175,7 @@ foreach($oaComplete as $oaPerCourse){
   <div class="tab-content">
 	<div id="home" class="tab-pane fade in active">
 		<h3 style="text-align: left;">Instrucciones para el estudiante</h3>
-			
+			 <a href="<?php echo $pdfUrl;?>" target="_blank"> Descargar pdf</a>
 		<div class="panel panel-default">
 			<div class="panel-body">	
 				<?php 

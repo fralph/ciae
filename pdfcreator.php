@@ -7,6 +7,7 @@ $activityid = required_param('id', PARAM_INT);
 $activity=$DB->get_record('emarking_activities',array('id'=>$activityid));
 $user_object = $DB->get_record('user', array('id'=>$activity->userid));
 // create new PDF document
+
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, 'mm', 'A4', true, 'UTF-8', false);
 
 // set document information
@@ -26,7 +27,8 @@ $pdf->AddPage();
 $html = '<p>hola</p>';
 
 // Print text using writeHTMLCell()
-$pdf->writeHTMLCell(0, 0, '', '', $activity->instructions, 0, 1, 0, true, '', true);
+//$pdf->writeHTMLCell(0, 0, '', '', $activity->instructions, 0, 1, 0, true, '', true);
+$pdf->writeHTML($activity->instructions, true, false, false, false, '');
 $pdf->AddPage();
 
 $html = '<h3>Hoja de respuesta</h3>
@@ -52,8 +54,8 @@ $html = '<h3>Hoja de respuesta</h3>
 <tr><td></td></tr>
 </table>';
 
-$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-
+//$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+$pdf->writeHTML($html, true, false, false, false, '');
 // ---------------------------------------------------------
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
