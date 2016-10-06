@@ -24,11 +24,9 @@
 
 require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/config.php');
 
+require_login();
 
 // Print the header.
-$strplural = get_string("modulenameplural", "assign");
-$PAGE->navbar->add($strplural);
-$PAGE->set_title($strplural);
 
 
 
@@ -36,11 +34,25 @@ $PAGE->set_title($strplural);
 $PAGE->set_pagelayout('embedded');
 require_login();
 $PAGE->set_context(context_system::instance());
-$url = new moodle_url($CFG->wwwroot.'/local/ciae/editRubric.php');
+$url = new moodle_url($CFG->wwwroot.'/local/ciae/rubric.php');
 $PAGE->set_url($url);
+$PAGE->set_pagelayout('embedded');
+$strplural = get_string("modulenameplural", "assign");
+$PAGE->set_title($strplural);
+$PAGE->navbar->add($strplural);
 
+global $PAGE,$USER, $OUTPUT, $DB;
 
+$action = optional_param('action',"", PARAM_TEXT);
 
-
-// Get the assign to render the page.
-echo $assign->view('viewcourseindex');
+switch($action) {
+    case "create":
+    include 'editRubric.php';
+        break;
+    case "update":
+        break;
+    case "delete":
+        break;
+    default:
+        break;
+}
