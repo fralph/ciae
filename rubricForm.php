@@ -2,6 +2,8 @@
 
 $url = new moodle_url($CFG->wwwroot.'/local/ciae/editRubric.php');
 require_once('forms/rubric.php');
+require_once($CFG->dirroot.'/grade/grading/form/rubric/lib.php');
+require_once($CFG->dirroot.'/grade/grading/lib.php');
 
 $id = optional_param("id",0, PARAM_INT);
 

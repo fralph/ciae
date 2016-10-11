@@ -25,6 +25,7 @@
 require_once ($CFG->libdir . '/formslib.php');
 require_once ($CFG->dirroot . '/course/lib.php');
 
+MoodleQuickForm::registerElementType('rubriceditor', $CFG->dirroot.'/grade/grading/form/rubric/rubriceditor.php', 'MoodleQuickForm_rubriceditor');
 
 class local_ciae_rubric_form extends moodleform {
 
@@ -44,14 +45,15 @@ class local_ciae_rubric_form extends moodleform {
         $mform->setType('description', PARAM_TEXT);
  
         $mform->addElement('static', '', '','Los objetivos que entrega el ministerio de educación.');
+        
+		
+        $mform->addElement('rubriceditor', 'rubric', get_string('rubric', 'gradingform_rubric'));
+        $mform->setType('rubric', PARAM_RAW);
 
         
         $this->add_action_buttons(true,'enviar');
 
-            
-
-        
-
+       
     }
     //Custom validation should be added here
     function validation($data, $files)
