@@ -40,6 +40,8 @@ $PAGE->set_pagelayout('embedded');
 $strplural = get_string("modulenameplural", "assign");
 $PAGE->set_title($strplural);
 $PAGE->navbar->add($strplural);
+$urlJquery = new moodle_url($CFG->wwwroot.'/lib/jquery/jquery-1.12.1.min.js');
+$PAGE->requires->js($urlJquery);
 
 global $PAGE,$USER, $OUTPUT, $DB;
 
