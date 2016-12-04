@@ -25,138 +25,163 @@
 require_once ($CFG->libdir . '/formslib.php');
 require_once ($CFG->dirroot . '/course/lib.php');
 
-require_once($CFG->dirroot.'/grade/grading/form/rubric/rubriceditor.php');
+require_once ($CFG->dirroot . '/grade/grading/form/rubric/rubriceditor.php');
 
-MoodleQuickForm::registerElementType('rubriceditor', $CFG->dirroot.'/grade/grading/form/rubric/rubriceditor.php', 'MoodleQuickForm_rubriceditor');
-
+MoodleQuickForm::registerElementType ( 'rubriceditor', $CFG->dirroot . '/grade/grading/form/rubric/rubriceditor.php', 'MoodleQuickForm_rubriceditor' );
 class local_ciae_rubric_form extends moodleform {
-
-    public function definition() {
-        global $CFG, $OUTPUT, $COURSE, $DB;
-
-        $mform = $this->_form; // Don't forget the underscore! 
-        // Paso 1 Información básica
-        $mform->addElement('header', 'db', 'Información Rúbrica', null);
-        //Título
-        $mform->addElement('text', 'title','Título'); 
-        $mform->setType('title', PARAM_TEXT);
-        $mform->addRule('title', get_string('required'), 'required');
-        //descripción
-        $mform->addElement('static', '', '','Pequeña descrición sobre la rúbrica, max 500 caracteres.');
-        $mform->addElement('textarea', 'description', "Descripción", 'wrap="virtual" rows="10" cols="50" maxlength="400"'); 
-        $mform->setType('description', PARAM_TEXT);
-
+	public function definition() {
+		global $CFG, $OUTPUT, $COURSE, $DB;
 		
-        $mform->addElement('rubriceditor', 'rubric', get_string('rubric', 'gradingform_rubric'));
-        $mform->setType('rubric', PARAM_RAW);
-
-        $buttonarray = array();
-        $buttonarray[] = &$mform->createElement('submit', 'saverubric', get_string('saverubric', 'gradingform_rubric'));
-        if ($this->_customdata['allowdraft']) {
-            $buttonarray[] = &$mform->createElement('submit', 'saverubricdraft', get_string('saverubricdraft', 'gradingform_rubric'));
-        }
-        $editbutton = &$mform->createElement('submit', 'editrubric', ' ');
-        $editbutton->freeze();
-        $buttonarray[] = &$editbutton;
-        $buttonarray[] = &$mform->createElement('cancel');
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
-        $mform->closeHeaderBefore('buttonar');
-
-
-
-        ?>
-        <script>
+		$mform = $this->_form; // Don't forget the underscore!
+		                       // Paso 1 Información básica
+		$mform->addElement ( 'header', 'db', 'Información Rúbrica', null );
+		// Título
+		$mform->addElement ( 'text', 'title', 'Título' );
+		$mform->setType ( 'title', PARAM_TEXT );
+		$mform->addRule ( 'title', get_string ( 'required' ), 'required' );
+		// descripción
+		$mform->addElement ( 'static', '', '', 'Pequeña descrición sobre la rúbrica, max 500 caracteres.' );
+		$mform->addElement ( 'textarea', 'description', "Descripción", 'wrap="virtual" rows="10" cols="50" maxlength="400"' );
+		$mform->setType ( 'description', PARAM_TEXT );
+		
+		$mform->addElement ( 'rubriceditor', 'rubric', get_string ( 'rubric', 'gradingform_rubric' ) );
+		$mform->setType ( 'rubric', PARAM_RAW );
+		
+		$buttonarray = array ();
+		$buttonarray [] = &$mform->createElement ( 'submit', 'saverubric', get_string ( 'saverubric', 'gradingform_rubric' ) );
+		if ($this->_customdata ['allowdraft']) {
+			$buttonarray [] = &$mform->createElement ( 'submit', 'saverubricdraft', get_string ( 'saverubricdraft', 'gradingform_rubric' ) );
+		}
+		$editbutton = &$mform->createElement ( 'submit', 'editrubric', ' ' );
+		$editbutton->freeze ();
+		$buttonarray [] = &$editbutton;
+		$buttonarray [] = &$mform->createElement ( 'cancel' );
+		$mform->addGroup ( $buttonarray, 'buttonar', '', array (
+				' ' 
+		), false );
+		$mform->closeHeaderBefore ( 'buttonar' );
+		
+		?>
+<script>
             $( document).ready(function(){
-                document.getElementById("page").style.width = "990px";
-                //$(".options").hide();
+                //document.getElementById("page").style.width = "990px";
+               
+                Y.one('.col-md-2').hide();
+				Y.one('.col-md-7').setAttribute("style","width:100%");
+
+				Y.one('.gradingform_rubric').setAttribute("style","max-width:100%");
+
+				$("#rubric-criteria").on("DOMNodeInserted",function(){
+
+					Y.all(".criterion").each(function(element){
+						element.setAttribute("style","height:200px");
+					});
+
+					Y.all('.level').each(function(element){
+						element.setAttribute("style","width:300px");
+					});
+
+					Y.all('textarea').each(function(element){
+						element.setAttribute("style","width:300px");
+					});
+					Y.all('.duplicate').each(function(element){
+						element.hide();
+					});
+					Y.all('.score').each(function(element){
+						element.hide();
+					});
+					score
+
+					
+	
+				});
+                
             });
 
         </script>
 
-        <?php
-
-       
-    }
-    //Custom validation should be added here
-    function validation($data, $files)
-    {
-
-      return true;
-    }
-
-    /**
-     * Return submitted data if properly submitted or returns NULL if validation fails or
-     * if there is no submitted data.
-     *
-     * @return object submitted data; NULL if not valid or not submitted or cancelled
-     */
-    public function get_data() {
-        $data = parent::get_data();
-        if (!empty($data->saverubric)) {
-            $data->status = gradingform_controller::DEFINITION_STATUS_READY;
-        } else if (!empty($data->saverubricdraft)) {
-            $data->status = gradingform_controller::DEFINITION_STATUS_DRAFT;
-        }
-        return $data;
-    }
-
-    /**
-     * Check if there are changes in the rubric and it is needed to ask user whether to
-     * mark the current grades for re-grading. User may confirm re-grading and continue,
-     * return to editing or cancel the changes
-     *
-     * @param gradingform_rubric_controller $controller
-     */
-    public function need_confirm_regrading($controller) {
-        $data = $this->get_data();
-        if (isset($data->rubric['regrade'])) {
-            // we have already displayed the confirmation on the previous step
-            return false;
-        }
-        if (!isset($data->saverubric) || !$data->saverubric) {
-            // we only need confirmation when button 'Save rubric' is pressed
-            return false;
-        }
-        if (!$controller->has_active_instances()) {
-            // nothing to re-grade, confirmation not needed
-            return false;
-        }
-        $changelevel = $controller->update_or_check_rubric($data);
-        if ($changelevel == 0) {
-            // no changes in the rubric, no confirmation needed
-            return false;
-        }
-
-        // freeze form elements and pass the values in hidden fields
-        // TODO MDL-29421 description_editor does not freeze the normal way, uncomment below when fixed
-        $form = $this->_form;
-        foreach (array('rubric', 'name'/*, 'description_editor'*/) as $fieldname) {
-            $el =& $form->getElement($fieldname);
-            $el->freeze();
-            $el->setPersistantFreeze(true);
-            if ($fieldname == 'rubric') {
-                $el->add_regrade_confirmation($changelevel);
-            }
-        }
-
-        // replace button text 'saverubric' and unfreeze 'Back to edit' button
-        $this->findButton('saverubric')->setValue(get_string('continue'));
-        $el =& $this->findButton('editrubric');
-        $el->setValue(get_string('backtoediting', 'gradingform_rubric'));
-        $el->unfreeze();
-
-        return true;
-    }
-
-    protected function &findButton($elementname) {
-        $form = $this->_form;
-        $buttonar =& $form->getElement('buttonar');
-        $elements =& $buttonar->getElements();
-        foreach ($elements as $el) {
-            if ($el->getName() == $elementname) {
-                return $el;
-            }
-        }
-        return null;
-    }
+<?php
+	}
+	// Custom validation should be added here
+	function validation($data, $files) {
+		return true;
+	}
+	
+	/**
+	 * Return submitted data if properly submitted or returns NULL if validation fails or
+	 * if there is no submitted data.
+	 *
+	 * @return object submitted data; NULL if not valid or not submitted or cancelled
+	 */
+	public function get_data() {
+		$data = parent::get_data ();
+		if (! empty ( $data->saverubric )) {
+			$data->status = gradingform_controller::DEFINITION_STATUS_READY;
+		} else if (! empty ( $data->saverubricdraft )) {
+			$data->status = gradingform_controller::DEFINITION_STATUS_DRAFT;
+		}
+		return $data;
+	}
+	
+	/**
+	 * Check if there are changes in the rubric and it is needed to ask user whether to
+	 * mark the current grades for re-grading.
+	 * User may confirm re-grading and continue,
+	 * return to editing or cancel the changes
+	 *
+	 * @param gradingform_rubric_controller $controller        	
+	 */
+	public function need_confirm_regrading($controller) {
+		$data = $this->get_data ();
+		if (isset ( $data->rubric ['regrade'] )) {
+			// we have already displayed the confirmation on the previous step
+			return false;
+		}
+		if (! isset ( $data->saverubric ) || ! $data->saverubric) {
+			// we only need confirmation when button 'Save rubric' is pressed
+			return false;
+		}
+		if (! $controller->has_active_instances ()) {
+			// nothing to re-grade, confirmation not needed
+			return false;
+		}
+		$changelevel = $controller->update_or_check_rubric ( $data );
+		if ($changelevel == 0) {
+			// no changes in the rubric, no confirmation needed
+			return false;
+		}
+		
+		// freeze form elements and pass the values in hidden fields
+		// TODO MDL-29421 description_editor does not freeze the normal way, uncomment below when fixed
+		$form = $this->_form;
+		foreach ( array (
+				'rubric',
+				'name'/*, 'description_editor'*/) as $fieldname ) {
+			$el = & $form->getElement ( $fieldname );
+			$el->freeze ();
+			$el->setPersistantFreeze ( true );
+			if ($fieldname == 'rubric') {
+				$el->add_regrade_confirmation ( $changelevel );
+			}
+		}
+		
+		// replace button text 'saverubric' and unfreeze 'Back to edit' button
+		$this->findButton ( 'saverubric' )->setValue ( get_string ( 'continue' ) );
+		$el = & $this->findButton ( 'editrubric' );
+		$el->setValue ( get_string ( 'backtoediting', 'gradingform_rubric' ) );
+		$el->unfreeze ();
+		
+		return true;
+	}
+	protected function &findButton($elementname) {
+		$form = $this->_form;
+		$buttonar = & $form->getElement ( 'buttonar' );
+		$elements = & $buttonar->getElements ();
+		foreach ( $elements as $el ) {
+			if ($el->getName () == $elementname) {
+				return $el;
+			}
+		}
+		return null;
+	}
 }
