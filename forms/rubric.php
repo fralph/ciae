@@ -35,34 +35,44 @@ class local_ciae_rubric_form extends moodleform {
 		$mform = $this->_form; // Don't forget the underscore!
 		                       // Paso 1 Información básica
 		$mform->addElement ( 'header', 'db', 'Información Rúbrica', null );
-		// Título
-		$mform->addElement ( 'text', 'title', 'Título' );
-		$mform->setType ( 'title', PARAM_TEXT );
-		$mform->addRule ( 'title', get_string ( 'required' ), 'required' );
-		// descripción
-		$mform->addElement ( 'static', '', '', 'Pequeña descrición sobre la rúbrica, max 500 caracteres.' );
-		$mform->addElement ( 'textarea', 'description', "Descripción", 'wrap="virtual" rows="10" cols="50" maxlength="400"' );
-		$mform->setType ( 'description', PARAM_TEXT );
 		
-		$mform->addElement ( 'rubriceditor', 'rubric', get_string ( 'rubric', 'gradingform_rubric' ) );
-		$mform->setType ( 'rubric', PARAM_RAW );
 		
-		$buttonarray = array ();
-		$buttonarray [] = &$mform->createElement ( 'submit', 'saverubric', get_string ( 'saverubric', 'gradingform_rubric' ) );
-		if ($this->_customdata ['allowdraft']) {
-			$buttonarray [] = &$mform->createElement ( 'submit', 'saverubricdraft', get_string ( 'saverubricdraft', 'gradingform_rubric' ) );
+		// name
+		$mform->addElement('text', 'name', get_string('name', 'gradingform_rubric'), array('size' => 52, 'aria-required' => 'true'));
+		$mform->addRule('name', get_string('required'), 'required', null, 'client');
+		$mform->setType('name', PARAM_TEXT);
+		
+		// description
+		$options = gradingform_rubric_controller::description_form_field_options($this->_customdata['context']);
+		$mform->addElement('editor', 'description_editor', get_string('description', 'gradingform_rubric'), null, $options);
+		$mform->setType('description_editor', PARAM_RAW);
+		
+		
+		
+		
+		// rubric editor
+		$element = $mform->addElement('rubriceditor', 'rubric', get_string('rubric', 'gradingform_rubric'));
+		$mform->setType('rubric', PARAM_RAW);
+		
+		
+		$buttonarray = array();
+		$buttonarray[] = &$mform->createElement('submit', 'saverubric', get_string('saverubric', 'gradingform_rubric'));
+		if ($this->_customdata['allowdraft']) {
+			$buttonarray[] = &$mform->createElement('submit', 'saverubricdraft', get_string('saverubricdraft', 'gradingform_rubric'));
 		}
-		$editbutton = &$mform->createElement ( 'submit', 'editrubric', ' ' );
-		$editbutton->freeze ();
-		$buttonarray [] = &$editbutton;
-		$buttonarray [] = &$mform->createElement ( 'cancel' );
-		$mform->addGroup ( $buttonarray, 'buttonar', '', array (
-				' ' 
-		), false );
-		$mform->closeHeaderBefore ( 'buttonar' );
+		$editbutton = &$mform->createElement('submit', 'editrubric', ' ');
+		$editbutton->freeze();
+		$buttonarray[] = &$editbutton;
+		$buttonarray[] = &$mform->createElement('cancel'); 
+		$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+		//$mform->closeHeaderBefore('buttonar');
+		
+		
+		
+	
 		
 		?>
-<script>
+		<script>
             $( document).ready(function(){
                 //document.getElementById("page").style.width = "990px";
                
@@ -71,26 +81,42 @@ class local_ciae_rubric_form extends moodleform {
 
 				Y.one('.gradingform_rubric').setAttribute("style","max-width:100%");
 
+				Y.all('textarea').each(function(element){
+					element.setAttribute("style","width:745px");
+				});
+
+				Y.one('#rubric-rubric').append('<input type="submit" name="rubric[criteria][searchcriterion]" id="rubric-criteria-searchcriterion" value="Search criterion">');
+
 				$("#rubric-criteria").on("DOMNodeInserted",function(){
 
 					Y.all(".criterion").each(function(element){
 						element.setAttribute("style","height:200px");
 					});
 
+					Y.all("textarea").each(function(element){
+						element.setAttribute("rows",9);
+					});
+
 					Y.all('.level').each(function(element){
 						element.setAttribute("style","width:300px");
 					});
 
-					Y.all('textarea').each(function(element){
-						element.setAttribute("style","width:300px");
-					});
+					
 					Y.all('.duplicate').each(function(element){
 						element.hide();
 					});
 					Y.all('.score').each(function(element){
 						element.hide();
 					});
-					score
+					
+					Y.all('table tbody tr').each(function(element){
+						x = 0;
+						element.all('td').each(function(e){
+							x++; 
+						});
+						console.log(x);
+						
+					});
 
 					
 	

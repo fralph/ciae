@@ -45,7 +45,7 @@ $PAGE->requires->js($urlJquery);
 
 global $PAGE,$USER, $OUTPUT, $DB;
 
-$action = optional_param('action',"", PARAM_TEXT);
+$action = optional_param('action',"create", PARAM_TEXT);
 
 switch($action) {
     case "create":
